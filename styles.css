@@ -1,0 +1,1074 @@
+/* 基础样式重置 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: #f5f5f5;
+  color: #333;
+  overflow: hidden;
+}
+
+/* Fidelity 品牌色彩 */
+:root {
+  --fidelity-red: #c41e3a;
+  --fidelity-blue: #1e5f99;
+  --fidelity-light-blue: #4a90c2;
+  --theme-orange: #e67e22;
+  --theme-yellow: #f1c40f;
+  --theme-green: #27ae60;
+  --theme-purple: #8e44ad;
+  --theme-teal: #16a085;
+  --text-dark: #2c3e50;
+  --text-light: #7f8c8d;
+  --background-light: #ecf0f1;
+  --border-light: #bdc3c7;
+}
+
+/* 演示容器 */
+.presentation-container {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+}
+
+/* 幻灯片基础样式 */
+.slide {
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transform: translateX(100px);
+  transition: all 0.5s ease-in-out;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  padding: 40px 60px;
+  /* 非激活页不接收指针事件，避免遮挡导致子区域无法滚动 */
+  pointer-events: none;
+  /* 确保内容不会溢出 */
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.slide.active {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+}
+
+/* 幻灯片头部 */
+.slide-header {
+  height: 80px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+/* Fidelity Logo */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo-icon {
+  width: 40px;
+  height: 40px;
+  background: var(--fidelity-red);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 24px;
+}
+
+.logo-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+/* 使用 Fidelity SVG 替换文字/方块 Logo */
+/* 默认显示文字/方块 Logo */
+.logo .logo-icon,
+.logo .logo-text {
+  display: flex;
+}
+
+/* 封面页使用SVG logo */
+#slide-1 .logo .logo-icon,
+#slide-1 .logo .logo-text {
+  display: none;
+}
+
+.logo-svg {
+  width: 127.5px; /* 153:48 等比，40px 高度对应宽度 */
+  height: 40px;
+  object-fit: contain;
+}
+
+.logo-main {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--fidelity-blue);
+}
+
+.logo-sub {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--fidelity-blue);
+  letter-spacing: 1px;
+}
+
+/* 封面页样式 */
+.cover-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  padding-left: 60px;
+}
+
+.cover-left {
+  flex: 1;
+  max-width: 800px;
+}
+
+.cover-title {
+  font-size: 48px;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 20px;
+  line-height: 1.2;
+}
+
+.cover-underline {
+  width: 120px;
+  height: 4px;
+  background: white;
+  margin-bottom: 30px;
+}
+
+.cover-subtitle {
+  font-size: 32px;
+  font-weight: 400;
+  color: white;
+  margin-bottom: 40px;
+  line-height: 1.3;
+}
+
+.cover-details p {
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+
+.cover-date {
+  margin-top: 20px;
+  font-weight: 300;
+  font-size: 16px;
+}
+
+/* 移除了封面页右侧的框框部分 */
+
+
+/* 封面页背景 */
+#slide-1 {
+  background: 
+    linear-gradient(135deg, rgba(30, 95, 153, 0.3) 0%, rgba(74, 144, 194, 0.2) 100%),
+    url('titel-aus-der-forschung-maerz-2024.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+/* 内容页标题 */
+.slide-title {
+  font-size: 36px;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 40px;
+  text-align: left;
+}
+
+/* 内容布局 */
+.content-layout {
+  flex: 1;
+  display: flex;
+  gap: 60px;
+  /* 允许子元素在 Flex 容器内按需收缩，以便内部滚动生效 */
+  min-height: 0;
+  /* 约束内部滚动容器的可视高度 */
+  overflow: hidden;
+  /* 确保内容区域不会超出可用空间 */
+  height: calc(100vh - 160px - 60px); /* 减去header和footer的高度 */
+}
+
+.content-left {
+  width: 300px;
+  flex-shrink: 0;
+}
+
+.content-right {
+  flex: 1;
+  /* 让右侧内容区域可滚动 */
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  /* 防止在 Flex 布局中由于自动最小高度导致溢出无法滚动 */
+  min-height: 0;
+}
+
+/* 主题区域 */
+.theme-section {
+  background: var(--background-light);
+  padding: 40px 30px;
+  border-radius: 8px;
+  height: fit-content;
+}
+
+.theme-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 15px;
+  line-height: 1.3;
+}
+
+.theme-underline {
+  width: 60px;
+  height: 4px;
+  margin-bottom: 15px;
+}
+
+.theme-underline.blue {
+  background: var(--fidelity-blue);
+}
+.theme-underline.orange {
+  background: var(--theme-orange);
+}
+.theme-underline.yellow {
+  background: var(--theme-yellow);
+}
+.theme-underline.green {
+  background: var(--theme-green);
+}
+.theme-underline.purple {
+  background: var(--theme-purple);
+}
+.theme-underline.teal {
+  background: var(--theme-teal);
+}
+
+.theme-subtitle {
+  font-size: 14px;
+  color: var(--text-light);
+  font-style: italic;
+}
+
+/* 要点列表 */
+.bullet-points {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.bullet-point {
+  display: flex;
+  gap: 15px;
+  align-items: flex-start;
+}
+
+.bullet {
+  color: var(--fidelity-blue);
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.bullet-point div {
+  flex: 1;
+}
+
+.bullet-point strong {
+  color: var(--text-dark);
+  font-weight: 600;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.sub-points {
+  list-style: none;
+  margin-top: 8px;
+}
+
+.sub-points li {
+  padding: 4px 0;
+  padding-left: 20px;
+  position: relative;
+  color: var(--text-dark);
+  line-height: 1.5;
+}
+
+.sub-points li::before {
+  content: "−";
+  position: absolute;
+  left: 0;
+  color: var(--fidelity-blue);
+  font-weight: bold;
+}
+
+/* 版本说明 */
+.version-note {
+  background: #fff3cd;
+  border: 1px solid #ffeaa7;
+  border-radius: 6px;
+  padding: 15px;
+  margin-top: 20px;
+  font-size: 14px;
+  color: #856404;
+}
+
+/* 架构图 */
+.architecture-diagram {
+  background: white;
+  border: 2px solid var(--border-light);
+  border-radius: 12px;
+  padding: 30px;
+  margin-bottom: 30px;
+}
+
+.arch-row {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.arch-row.single {
+  margin-bottom: 0;
+}
+
+.arch-box {
+  background: var(--background-light);
+  border: 2px solid var(--fidelity-blue);
+  border-radius: 8px;
+  padding: 15px 20px;
+  text-align: center;
+  font-weight: 600;
+  color: var(--text-dark);
+  min-width: 120px;
+  position: relative;
+}
+
+.arch-box.central {
+  background: var(--fidelity-blue);
+  color: white;
+}
+
+.arch-box.wide {
+  min-width: 300px;
+}
+
+.arch-desc {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--text-light);
+  display: block;
+  margin-top: 5px;
+}
+
+.arch-box.central .arch-desc {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.arch-arrow-down {
+  width: 2px;
+  height: 30px;
+  background: var(--fidelity-blue);
+  margin: 0 auto 20px;
+  position: relative;
+}
+
+.arch-arrow-down::after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: -4px;
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 10px solid var(--fidelity-blue);
+}
+
+/* 组件列表 */
+.component-list h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 15px;
+}
+
+.component-list ul {
+  list-style: none;
+}
+
+.component-list li {
+  padding: 6px 0;
+  padding-left: 20px;
+  position: relative;
+  line-height: 1.5;
+}
+
+.component-list li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: var(--fidelity-blue);
+  font-weight: bold;
+}
+
+/* 用例展示 */
+.use-cases {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.use-case {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  background: white;
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.use-case-icon {
+  font-size: 32px;
+  flex-shrink: 0;
+  width: 50px;
+  text-align: center;
+}
+
+.use-case-content h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 10px;
+}
+
+.use-case-content ul {
+  list-style: none;
+}
+
+.use-case-content li {
+  padding: 4px 0;
+  padding-left: 15px;
+  position: relative;
+  color: var(--text-dark);
+  line-height: 1.4;
+}
+
+.use-case-content li::before {
+  content: "−";
+  position: absolute;
+  left: 0;
+  color: var(--fidelity-blue);
+}
+
+/* 代码区域 */
+.code-section {
+  background: #2d3748;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  overflow-x: auto;
+}
+
+.code-section pre {
+  margin: 0;
+  font-family: "Monaco", "Menlo", "Ubuntu Mono", monospace;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.code-section code {
+  color: #e2e8f0;
+}
+
+/* 输出区域 */
+.output-section h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 10px;
+}
+
+.output-box {
+  background: #f7fafc;
+  border: 1px solid var(--border-light);
+  border-radius: 6px;
+  padding: 15px;
+  font-family: monospace;
+  font-size: 13px;
+  color: var(--text-dark);
+  margin-bottom: 20px;
+}
+
+/* 关键优势 */
+.key-advantage {
+  background: #e6fffa;
+  border: 1px solid #81e6d9;
+  border-radius: 6px;
+  padding: 15px;
+  color: #234e52;
+  font-size: 14px;
+}
+
+/* 幻灯片底部 */
+.slide-footer {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid var(--border-light);
+  margin-top: auto;
+  padding-top: 20px;
+  flex-shrink: 0;
+}
+
+.slide-footer p {
+  font-size: 12px;
+  color: var(--text-light);
+}
+
+.page-number {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-dark);
+}
+
+.footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Footer 位置的 SVG 尺寸更小 */
+.footer-logo .logo-icon,
+.footer-logo .logo-text {
+  display: flex;
+}
+
+.footer-logo .logo-icon {
+  width: 24px;
+  height: 24px;
+  font-size: 14px;
+}
+
+.footer-logo .logo-main {
+  font-size: 14px;
+}
+
+.footer-logo .logo-sub {
+  font-size: 8px;
+}
+
+/* 导航控制 */
+.navigation {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 12px 24px;
+  border-radius: 25px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+  /* 默认隐藏导航，由按钮控制显示 */
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-50%) translateY(10px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.navigation.show {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* 底部切换导航显示的按钮 */
+.nav-toggle-btn {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1001;
+  background: rgba(255, 255, 255, 0.8);
+  color: var(--text-dark);
+  border: none;
+  border-radius: 30px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  backdrop-filter: blur(5px);
+  transition: all 0.2s ease;
+  opacity: 0.7;
+}
+
+.nav-toggle-btn:hover {
+  background: rgba(255, 255, 255, 0.95);
+  opacity: 1;
+  transform: translateX(-50%) scale(1.05);
+}
+
+.nav-btn {
+  background: var(--fidelity-blue);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.nav-btn:hover {
+  background: var(--fidelity-light-blue);
+  transform: translateY(-1px);
+}
+
+.nav-btn:disabled {
+  background: var(--text-light);
+  cursor: not-allowed;
+  transform: none;
+}
+
+.slide-counter {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-dark);
+  min-width: 60px;
+  text-align: center;
+}
+
+/* 幻灯片索引 */
+.slide-index {
+  position: fixed;
+  right: 30px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1000;
+}
+
+.index-dots {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(30, 95, 153, 0.3);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.dot.active {
+  background: var(--fidelity-blue);
+  transform: scale(1.5);
+}
+
+.dot:hover {
+  background: var(--fidelity-light-blue);
+  transform: scale(1.2);
+}
+
+/* 比较表格样式 */
+.comparison-table {
+  margin-bottom: 30px;
+  overflow-x: auto;
+}
+
+.comparison-table table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.comparison-table th,
+.comparison-table td {
+  padding: 12px;
+  text-align: left;
+  border: 1px solid var(--border-light);
+}
+
+.comparison-table th {
+  background: var(--fidelity-blue);
+  color: white;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.comparison-table tr:nth-child(even) {
+  background: var(--background-light);
+}
+
+.comparison-table td:first-child {
+  font-weight: 500;
+  color: var(--text-dark);
+}
+
+.comparison-table td:nth-child(2) {
+  color: var(--fidelity-blue);
+  font-weight: 500;
+}
+
+.comparison-table td:last-child {
+  background: #f8f9fa;
+  font-family: monospace;
+  font-size: 12px;
+  color: var(--theme-purple);
+}
+
+/* 核心优势列表 */
+.core-advantages {
+  margin-top: 30px;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.core-advantages h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 15px;
+}
+
+.core-advantages ul {
+  list-style: none;
+}
+
+.core-advantages li {
+  padding: 6px 0;
+  color: var(--text-dark);
+  line-height: 1.5;
+}
+
+/* 快速开始部分 */
+.quick-start-section {
+  margin-bottom: 30px;
+}
+
+.quick-start-section h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 15px;
+}
+
+.learning-path {
+  margin-bottom: 30px;
+}
+
+.learning-path h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 15px;
+}
+
+.learning-path ol {
+  padding-left: 20px;
+}
+
+.learning-path li {
+  padding: 6px 0;
+  color: var(--text-dark);
+  line-height: 1.5;
+}
+
+.resources {
+  background: var(--background-light);
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.resources h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 15px;
+}
+
+.resources ul {
+  list-style: none;
+}
+
+.resources li {
+  padding: 6px 0;
+  padding-left: 20px;
+  position: relative;
+  color: var(--text-dark);
+  line-height: 1.5;
+}
+
+.resources li::before {
+  content: "🔗";
+  position: absolute;
+  left: 0;
+}
+
+/* 感谢页样式 */
+#slide-17 {
+  background: 
+    linear-gradient(135deg, rgba(30, 95, 153, 0.4) 0%, rgba(74, 144, 194, 0.3) 100%),
+    url('titel-aus-der-forschung-maerz-2024.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+.thank-you-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px;
+}
+
+.thank-you-main {
+  text-align: center;
+  max-width: 800px;
+  color: white;
+}
+
+.thank-you-title {
+  font-size: 48px;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 20px;
+  line-height: 1.2;
+}
+
+.thank-you-underline {
+  width: 120px;
+  height: 4px;
+  background: white;
+  margin: 0 auto 30px;
+}
+
+.thank-you-subtitle {
+  font-size: 32px;
+  font-weight: 400;
+  color: white;
+  margin-bottom: 40px;
+  line-height: 1.3;
+}
+
+.summary-section,
+.next-steps,
+.qa-section {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 12px;
+  padding: 25px;
+  margin-bottom: 25px;
+  text-align: left;
+}
+
+.summary-section h3,
+.next-steps h3,
+.qa-section h3 {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 15px;
+}
+
+.summary-section ul,
+.next-steps ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.summary-section li,
+.next-steps li {
+  padding: 6px 0;
+  padding-left: 25px;
+  position: relative;
+  color: var(--text-dark);
+  line-height: 1.5;
+}
+
+.summary-section li::before,
+.next-steps li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: var(--fidelity-blue);
+  font-weight: bold;
+}
+
+.qa-section {
+  text-align: center;
+}
+
+.qa-section p {
+  color: var(--text-dark);
+  margin-top: 15px;
+}
+
+.thank-you-message {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--fidelity-blue) !important;
+}
+
+/* 更好的代码高亮 */
+.code-section h3 {
+  color: var(--text-dark);
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  margin-top: 20px;
+}
+
+.code-section h3:first-child {
+  margin-top: 0;
+}
+
+/* 右侧索引点适配更多幻灯片 */
+.slide-index {
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.index-dots {
+  gap: 6px;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+}
+
+.dot.active {
+  transform: scale(1.3);
+}
+
+.dot:hover {
+  transform: scale(1.1);
+}
+
+/* 响应式设计 */
+@media (max-width: 1200px) {
+  .slide {
+    padding: 30px 40px;
+  }
+
+  .content-layout {
+    gap: 40px;
+  }
+
+  .content-left {
+    width: 250px;
+  }
+  
+  .comparison-table {
+    font-size: 12px;
+  }
+  
+  .comparison-table th,
+  .comparison-table td {
+    padding: 8px;
+  }
+}
+
+@media (max-width: 768px) {
+  .slide {
+    padding: 20px 30px;
+  }
+
+  .content-layout {
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .content-left {
+    width: 100%;
+  }
+
+  .cover-content {
+    flex-direction: column;
+    gap: 40px;
+    text-align: center;
+  }
+
+  .cover-title {
+    font-size: 36px;
+  }
+
+  .cover-subtitle {
+    font-size: 24px;
+  }
+
+  .slide-title {
+    font-size: 28px;
+  }
+
+  .navigation {
+    bottom: 20px;
+    padding: 10px 20px;
+  }
+
+  .slide-index {
+    right: 20px;
+  }
+  
+  .thank-you-title {
+    font-size: 32px;
+  }
+  
+  .thank-you-subtitle {
+    font-size: 24px;
+  }
+  
+  .thank-you-content {
+    padding: 30px;
+  }
+  
+  .comparison-table {
+    font-size: 11px;
+  }
+  
+  .comparison-table th,
+  .comparison-table td {
+    padding: 6px;
+  }
+}
