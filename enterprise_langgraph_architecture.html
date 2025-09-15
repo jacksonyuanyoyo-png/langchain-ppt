@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LangGraph 企业级架构设计文档</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f8f9fa;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 300;
+            margin-bottom: 0.5rem;
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .section {
+            background: white;
+            margin: 2rem 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .section-header {
+            background: #34495e;
+            color: white;
+            padding: 1rem 2rem;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+        
+        .section-content {
+            padding: 2rem;
+        }
+        
+        .diagram-container {
+            background: #fafafa;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            padding: 2rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+        
+        .description {
+            background: #f8f9fa;
+            border-left: 4px solid #007bff;
+            padding: 1rem 1.5rem;
+            margin: 1rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .description h4 {
+            color: #007bff;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .description p {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .key-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        
+        .feature-card {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+            padding: 1rem;
+        }
+        
+        .feature-card h5 {
+            color: #495057;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+        
+        .feature-card p {
+            color: #6c757d;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        .tech-specs {
+            background: #e3f2fd;
+            border: 1px solid #bbdefb;
+            border-radius: 6px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+        
+        .tech-specs h4 {
+            color: #1976d2;
+            margin-bottom: 1rem;
+        }
+        
+        .spec-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .spec-list li {
+            padding: 0.3rem 0;
+            border-bottom: 1px solid #e3f2fd;
+        }
+        
+        .spec-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .spec-label {
+            font-weight: 600;
+            color: #1976d2;
+            display: inline-block;
+            width: 140px;
+        }
+        
+        .navigation {
+            position: sticky;
+            top: 0;
+            background: white;
+            border-bottom: 1px solid #e0e0e0;
+            padding: 1rem 0;
+            z-index: 100;
+        }
+        
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .nav-links a {
+            color: #495057;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .nav-links a:hover {
+            background: #007bff;
+            color: white;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .container {
+                padding: 0 10px;
+            }
+            
+            .section-content {
+                padding: 1rem;
+            }
+            
+            .nav-links {
+                gap: 1rem;
+            }
+            
+            .nav-links a {
+                padding: 0.3rem 0.8rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <h1>LangGraph 企业级架构设计</h1>
+            <p>基于 Mermaid 的系统架构可视化文档</p>
+        </div>
+    </div>
+    
+    <div class="navigation">
+        <div class="container">
+            <div class="nav-links">
+                <a href="#architecture">系统架构</a>
+                <a href="#sequence">执行序列</a>
+                <a href="#state">状态管理</a>
+                <a href="#dataflow">数据流</a>
+                <a href="#components">组件关系</a>
+                <a href="#deployment">部署架构</a>
+                <a href="#monitoring">监控体系</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container">
+        <!-- 系统架构概览 -->
+        <div class="section" id="architecture">
+            <div class="section-header">系统架构概览</div>
+            <div class="section-content">
+                <div class="description">
+                    <h4>架构设计原则</h4>
+                    <p>采用分层架构设计，确保系统的可扩展性、可维护性和高可用性。通过微服务架构实现组件解耦，支持独立部署和扩展。</p>
+                </div>
+                
+                <div class="diagram-container">
+                    <div class="mermaid">
+                        graph TB
+                            subgraph "Client Layer"
+                                API[REST API Endpoint]
+                                WS[WebSocket Connection]
+                            end
+                            
+                            subgraph "Application Layer"
+                                Router[Request Router]
+                                Auth[Authentication Service]
+                                RateLimit[Rate Limiting]
+                            end
+                            
+                            subgraph "LangGraph Core Engine"
+                                StateManager[State Management]
+                                WorkflowEngine[Workflow Execution Engine]
+                                NodeRegistry[Node Registry]
+                            end
+                            
+                            subgraph "Processing Nodes"
+                                IntentAnalysis[Intent Analysis Node]
+                                ResponseGeneration[Response Generation Node]
+                                ConversationPersistence[Conversation Persistence Node]
+                            end
+                            
+                            subgraph "External Services"
+                                LLMService[Large Language Model API]
+                                Database[(Conversation Database)]
+                                Cache[(Redis Cache)]
+                            end
+                            
+                            subgraph "Infrastructure"
+                                Monitoring[Monitoring & Logging]
+                                ConfigService[Configuration Management]
+                            end
+                            
+                            API --> Router
+                            WS --> Router
+                            Router --> Auth
+                            Auth --> RateLimit
+                            RateLimit --> StateManager
+                            
+                            StateManager --> WorkflowEngine
+                            WorkflowEngine --> NodeRegistry
+                            
+                            NodeRegistry --> IntentAnalysis
+                            NodeRegistry --> ResponseGeneration
+                            NodeRegistry --> ConversationPersistence
+                            
+                            IntentAnalysis --> ResponseGeneration
+                            ResponseGeneration --> ConversationPersistence
+                            
+                            ResponseGeneration --> LLMService
+                            ConversationPersistence --> Database
+                            StateManager --> Cache
+                            
+                            WorkflowEngine --> Monitoring
+                            StateManager --> ConfigService
+                            
+                            classDef clientLayer fill:#e1f5fe,stroke:#0277bd,stroke-width:2px
+                            classDef appLayer fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+                            classDef coreEngine fill:#e8f5e8,stroke:#2e7d32,stroke-width:2px
+                            classDef processing fill:#fff3e0,stroke:#ef6c00,stroke-width:2px
+                            classDef external fill:#fce4ec,stroke:#c2185b,stroke-width:2px
+                            classDef infrastructure fill:#f1f8e9,stroke:#558b2f,stroke-width:2px
+                            
+                            class API,WS clientLayer
+                            class Router,Auth,RateLimit appLayer
+                            class StateManager,WorkflowEngine,NodeRegistry coreEngine
+                            class IntentAnalysis,ResponseGeneration,ConversationPersistence processing
+                            class LLMService,Database,Cache external
+                            class Monitoring,ConfigService infrastructure
+                    </div>
+                </div>
+                
+                <div class="key-features">
+                    <div class="feature-card">
+                        <h5>高可用性</h5>
+                        <p>多实例部署，负载均衡，故障自动切换</p>
+                    </div>
+                    <div class="feature-card">
+                        <h5>可扩展性</h5>
+                        <p>水平扩展，微服务架构，弹性伸缩</p>
+                    </div>
+                    <div class="feature-card">
+                        <h5>安全性</h5>
+                        <p>身份认证，访问控制，数据加密</p>
+                    </div>
+                    <div class="feature-card">
+                        <h5>可观测性</h5>
+                        <p>全链路监控，日志聚合，性能指标</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 执行序列图 -->
+        <div class="section" id="sequence">
+            <div class="section-header">工作流程执行序列</div>
+            <div class="section-content">
+                <div class="description">
+                    <h4>请求处理流程</h4>
+                    <p>展示从客户端请求到响应返回的完整处理流程，包括认证、工作流执行、LLM调用和数据持久化等关键步骤。</p>
+                </div>
+                
+                <div class="diagram-container">
+                    <div class="mermaid">
+                        sequenceDiagram
+                            participant Client as Client Application
+                            participant API as API Gateway
+                            participant Auth as Authentication
+                            participant Engine as Workflow Engine
+                            participant Intent as Intent Analysis
+                            participant LLM as LLM Service
+                            participant Persist as Persistence Layer
+                            participant DB as Database
+                            
+                            Client->>+API: POST /chat/conversation
+                            API->>+Auth: Validate Token
+                            Auth-->>-API: Authentication Success
+                            
+                            API->>+Engine: Initialize Workflow
+                            Note over Engine: Create GraphState Instance
+                            Engine->>+Intent: Execute Intent Analysis
+                            Intent-->>-Engine: Intent Classification Result
+                            
+                            Engine->>+LLM: Generate Response Request
+                            Note over LLM: Process with GPT-3.5-turbo
+                            LLM-->>-Engine: Generated Response
+                            
+                            Engine->>+Persist: Save Conversation
+                            Persist->>+DB: Store Conversation Data
+                            DB-->>-Persist: Storage Confirmation
+                            Persist-->>-Engine: Persistence Complete
+                            
+                            Engine-->>-API: Workflow Result
+                            API-->>-Client: Response Payload
+                    </div>
+                </div>
+                
+                <div class="tech-specs">
+                    <h4>技术规格</h4>
+                    <ul class="spec-list">
+                        <li><span class="spec-label">请求处理时间:</span> < 2000ms (P95)</li>
+                        <li><span class="spec-label">并发处理能力:</span> 1000+ requests/second</li>
+                        <li><span class="spec-label">认证方式:</span> JWT Token / OAuth 2.0</li>
+                        <li><span class="spec-label">数据格式:</span> JSON</li>
+                        <li><span class="spec-label">错误处理:</span> HTTP Status Codes + Error Details</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 状态管理 -->
+        <div class="section" id="state">
+            <div class="section-header">状态管理架构</div>
+            <div class="section-content">
+                <div class="description">
+                    <h4>状态生命周期管理</h4>
+                    <p>基于有限状态机的设计，确保系统状态的一致性和可预测性。支持状态持久化和恢复机制。</p>
+                </div>
+                
+                <div class="diagram-container">
+                    <div class="mermaid">
+                        stateDiagram-v2
+                            [*] --> Initialized: Create Session
+                            
+                            state "Request Processing" as Processing {
+                                [*] --> ValidatingInput
+                                ValidatingInput --> AnalyzingIntent: Input Valid
+                                ValidatingInput --> ErrorHandling: Input Invalid
+                                
+                                AnalyzingIntent --> GeneratingResponse: Intent Identified
+                                AnalyzingIntent --> ErrorHandling: Analysis Failed
+                                
+                                GeneratingResponse --> PersistingData: Response Generated
+                                GeneratingResponse --> ErrorHandling: Generation Failed
+                                
+                                PersistingData --> Completed: Data Saved
+                                PersistingData --> ErrorHandling: Persistence Failed
+                                
+                                ErrorHandling --> Completed: Error Handled
+                            }
+                            
+                            Initialized --> Processing: Receive Request
+                            Processing --> Initialized: Process Complete
+                            Processing --> [*]: Session Terminated
+                            
+                            state "Error Handling" as ErrorHandling {
+                                [*] --> LoggingError
+                                LoggingError --> NotifyingMonitoring
+                                NotifyingMonitoring --> ReturningErrorResponse
+                                ReturningErrorResponse --> [*]
+                            }
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 数据流架构 -->
+        <div class="section" id="dataflow">
+            <div class="section-header">数据流架构</div>
+            <div class="section-content">
+                <div class="description">
+                    <h4>数据处理管道</h4>
+                    <p>采用管道模式设计数据处理流程，实现数据的有序处理和质量保证。支持数据缓存和批处理优化。</p>
+                </div>
+                
+                <div class="diagram-container">
+                    <div class="mermaid">
+                        flowchart LR
+                            subgraph "Input Layer"
+                                UserInput[User Message Input]
+                                RequestValidation[Request Validation]
+                            end
+                            
+                            subgraph "Processing Pipeline"
+                                MessageQueue[Message Queue]
+                                IntentClassifier[Intent Classification]
+                                ContextRetrieval[Context Retrieval]
+                                ResponseGenerator[Response Generation]
+                                QualityAssurance[Quality Assurance]
+                            end
+                            
+                            subgraph "Storage Layer"
+                                ConversationStore[(Conversation Store)]
+                                SessionCache[(Session Cache)]
+                                ModelCache[(Model Cache)]
+                            end
+                            
+                            subgraph "Output Layer"
+                                ResponseFormatting[Response Formatting]
+                                DeliveryMechanism[Delivery Mechanism]
+                            end
+                            
+                            UserInput --> RequestValidation
+                            RequestValidation --> MessageQueue
+                            MessageQueue --> IntentClassifier
+                            IntentClassifier --> ContextRetrieval
+                            ContextRetrieval --> ResponseGenerator
+                            ResponseGenerator --> QualityAssurance
+                            QualityAssurance --> ResponseFormatting
+                            ResponseFormatting --> DeliveryMechanism
+                            
+                            IntentClassifier -.-> SessionCache
+                            ContextRetrieval -.-> ConversationStore
+                            ResponseGenerator -.-> ModelCache
+                            QualityAssurance -.-> ConversationStore
+                            
+                            classDef inputLayer fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+                            classDef processing fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+                            classDef storage fill:#e8f5e8,stroke:#388e3c,stroke-width:2px
+                            classDef output fill:#fff8e1,stroke:#f57c00,stroke-width:2px
+                            
+                            class UserInput,RequestValidation inputLayer
+                            class MessageQueue,IntentClassifier,ContextRetrieval,ResponseGenerator,QualityAssurance processing
+                            class ConversationStore,SessionCache,ModelCache storage
+                            class ResponseFormatting,DeliveryMechanism output
+                    </div>
+                </div>
+                
+                <div class="tech-specs">
+                    <h4>数据处理性能指标</h4>
+                    <ul class="spec-list">
+                        <li><span class="spec-label">消息队列:</span> Apache Kafka / Redis Streams</li>
+                        <li><span class="spec-label">缓存策略:</span> LRU + TTL</li>
+                        <li><span class="spec-label">数据持久化:</span> PostgreSQL / MongoDB</li>
+                        <li><span class="spec-label">批处理大小:</span> 100-1000 messages</li>
+                        <li><span class="spec-label">数据保留期:</span> 30 days (active), 1 year (archived)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 部署架构 -->
+        <div class="section" id="deployment">
+            <div class="section-header">部署架构</div>
+            <div class="section-content">
+                <div class="description">
+                    <h4>云原生部署方案</h4>
+                    <p>基于 Kubernetes 的容器化部署，支持自动扩缩容、服务发现和负载均衡。采用蓝绿部署策略确保零停机更新。</p>
+                </div>
+                
+                <div class="diagram-container">
+                    <div class="mermaid">
+                        graph TB
+                            subgraph "Load Balancer"
+                                LB[Application Load Balancer]
+                            end
+                            
+                            subgraph "Application Tier"
+                                App1[LangGraph Service Instance 1]
+                                App2[LangGraph Service Instance 2]
+                                App3[LangGraph Service Instance 3]
+                            end
+                            
+                            subgraph "Data Tier"
+                                PrimaryDB[(Primary Database)]
+                                ReadReplica[(Read Replica)]
+                                RedisCluster[(Redis Cluster)]
+                            end
+                            
+                            subgraph "External Services"
+                                OpenAI[OpenAI API]
+                                Monitoring[Monitoring Service]
+                                LogAggregation[Log Aggregation]
+                            end
+                            
+                            subgraph "Security Layer"
+                                WAF[Web Application Firewall]
+                                VPN[VPN Gateway]
+                            end
+                            
+                            Internet --> WAF
+                            WAF --> LB
+                            LB --> App1
+                            LB --> App2
+                            LB --> App3
+                            
+                            App1 --> PrimaryDB
+                            App2 --> PrimaryDB
+                            App3 --> PrimaryDB
+                            
+                            App1 --> ReadReplica
+                            App2 --> ReadReplica
+                            App3 --> ReadReplica
+                            
+                            App1 --> RedisCluster
+                            App2 --> RedisCluster
+                            App3 --> RedisCluster
+                            
+                            App1 --> OpenAI
+                            App2 --> OpenAI
+                            App3 --> OpenAI
+                            
+                            App1 --> Monitoring
+                            App2 --> Monitoring
+                            App3 --> Monitoring
+                            
+                            App1 --> LogAggregation
+                            App2 --> LogAggregation
+                            App3 --> LogAggregation
+                            
+                            VPN --> App1
+                            VPN --> App2
+                            VPN --> App3
+                            
+                            classDef loadBalancer fill:#e1f5fe,stroke:#0277bd,stroke-width:3px
+                            classDef application fill:#e8f5e8,stroke:#2e7d32,stroke-width:2px
+                            classDef database fill:#fff3e0,stroke:#ef6c00,stroke-width:2px
+                            classDef external fill:#fce4ec,stroke:#c2185b,stroke-width:2px
+                            classDef security fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+                            
+                            class LB loadBalancer
+                            class App1,App2,App3 application
+                            class PrimaryDB,ReadReplica,RedisCluster database
+                            class OpenAI,Monitoring,LogAggregation external
+                            class WAF,VPN security
+                    </div>
+                </div>
+                
+                <div class="key-features">
+                    <div class="feature-card">
+                        <h5>容器化部署</h5>
+                        <p>Docker 容器，Kubernetes 编排，自动扩缩容</p>
+                    </div>
+                    <div class="feature-card">
+                        <h5>高可用性</h5>
+                        <p>多可用区部署，故障自动切换，99.9% SLA</p>
+                    </div>
+                    <div class="feature-card">
+                        <h5>安全防护</h5>
+                        <p>WAF 防护，VPN 访问，网络隔离</p>
+                    </div>
+                    <div class="feature-card">
+                        <h5>监控告警</h5>
+                        <p>全方位监控，实时告警，日志聚合</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 监控体系 -->
+        <div class="section" id="monitoring">
+            <div class="section-header">监控和可观测性</div>
+            <div class="section-content">
+                <div class="description">
+                    <h4>全栈监控方案</h4>
+                    <p>构建完整的监控体系，涵盖应用性能、业务指标、基础设施和安全四个维度，实现主动式运维管理。</p>
+                </div>
+                
+                <div class="diagram-container">
+                    <div class="mermaid">
+                        graph TD
+                            subgraph "Application Metrics"
+                                RequestLatency[Request Latency]
+                                ThroughputMetrics[Throughput Metrics]
+                                ErrorRate[Error Rate]
+                                ResourceUtilization[Resource Utilization]
+                            end
+                            
+                            subgraph "Business Metrics"
+                                ConversationSuccess[Conversation Success Rate]
+                                UserSatisfaction[User Satisfaction Score]
+                                IntentAccuracy[Intent Classification Accuracy]
+                                ResponseQuality[Response Quality Metrics]
+                            end
+                            
+                            subgraph "Infrastructure Metrics"
+                                CPUUsage[CPU Usage]
+                                MemoryUsage[Memory Usage]
+                                NetworkIO[Network I/O]
+                                DiskUsage[Disk Usage]
+                            end
+                            
+                            subgraph "Alerting System"
+                                ThresholdMonitoring[Threshold Monitoring]
+                                AnomalyDetection[Anomaly Detection]
+                                IncidentManagement[Incident Management]
+                            end
+                            
+                            subgraph "Dashboards"
+                                OperationalDashboard[Operational Dashboard]
+                                BusinessDashboard[Business Intelligence Dashboard]
+                                TechnicalDashboard[Technical Performance Dashboard]
+                            end
+                            
+                            RequestLatency --> ThresholdMonitoring
+                            ErrorRate --> AnomalyDetection
+                            ConversationSuccess --> IncidentManagement
+                            
+                            ThresholdMonitoring --> OperationalDashboard
+                            AnomalyDetection --> TechnicalDashboard
+                            IncidentManagement --> BusinessDashboard
+                            
+                            ResourceUtilization --> TechnicalDashboard
+                            UserSatisfaction --> BusinessDashboard
+                            CPUUsage --> OperationalDashboard
+                            
+                            classDef appMetrics fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+                            classDef businessMetrics fill:#e8f5e8,stroke:#388e3c,stroke-width:2px
+                            classDef infraMetrics fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+                            classDef alerting fill:#fce4ec,stroke:#c2185b,stroke-width:2px
+                            classDef dashboards fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+                            
+                            class RequestLatency,ThroughputMetrics,ErrorRate,ResourceUtilization appMetrics
+                            class ConversationSuccess,UserSatisfaction,IntentAccuracy,ResponseQuality businessMetrics
+                            class CPUUsage,MemoryUsage,NetworkIO,DiskUsage infraMetrics
+                            class ThresholdMonitoring,AnomalyDetection,IncidentManagement alerting
+                            class OperationalDashboard,BusinessDashboard,TechnicalDashboard dashboards
+                    </div>
+                </div>
+                
+                <div class="tech-specs">
+                    <h4>监控技术栈</h4>
+                    <ul class="spec-list">
+                        <li><span class="spec-label">指标收集:</span> Prometheus + Grafana</li>
+                        <li><span class="spec-label">日志聚合:</span> ELK Stack (Elasticsearch, Logstash, Kibana)</li>
+                        <li><span class="spec-label">链路追踪:</span> Jaeger / Zipkin</li>
+                        <li><span class="spec-label">告警通知:</span> PagerDuty / Slack Integration</li>
+                        <li><span class="spec-label">SLA 目标:</span> 99.9% 可用性，P95 < 2s 响应时间</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 初始化 Mermaid
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            },
+            sequence: {
+                useMaxWidth: true,
+                showSequenceNumbers: true,
+                actorMargin: 50,
+                width: 150,
+                height: 65,
+                boxMargin: 10,
+                boxTextMargin: 5,
+                noteMargin: 10,
+                messageMargin: 35
+            },
+            stateDiagram: {
+                useMaxWidth: true
+            },
+            classDiagram: {
+                useMaxWidth: true
+            }
+        });
+        
+        // 平滑滚动导航
+        document.querySelectorAll('.nav-links a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

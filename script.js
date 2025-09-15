@@ -34,6 +34,24 @@ class PPTPresentation {
   }
 
   initializeEventListeners() {
+    // 工具函数：查找当前激活幻灯片内的可滚动祖先容器
+    const getScrollableAncestor = (startEl, activeSlide) => {
+      if (!startEl || !activeSlide) return null
+      let node = startEl.nodeType === 1 ? startEl : startEl.parentElement
+      while (node && node !== activeSlide && node !== document.body) {
+        try {
+          const style = window.getComputedStyle(node)
+          const overflowY = style.overflowY
+          const canOverflow = overflowY === 'auto' || overflowY === 'scroll'
+          if (canOverflow && node.scrollHeight > node.clientHeight) {
+            return node
+          }
+        } catch(_) {}
+        node = node.parentElement
+      }
+      return null
+    }
+
     // 导航按钮
     document.getElementById("prevBtn").addEventListener("click", () => {
       console.log("点击了上一页按钮")
@@ -44,14 +62,14 @@ class PPTPresentation {
       this.nextSlide()
     })
 
-    // 键盘导航（当焦点在允许滚动的区域且仍有可滚动距离时，不触发翻页）
+    // 键盘导航（当焦点在任何允许滚动的区域且仍有可滚动距离时，不触发翻页）
     document.addEventListener("keydown", (e) => {
       const activeSlide = this.slides[this.currentSlide - 1]
-      const scrollable = activeSlide?.querySelector('.content-right')
-
-      const isScrollableAreaFocused = document.activeElement && (scrollable?.contains(document.activeElement))
-      const canScrollUp = scrollable && scrollable.scrollTop > 0
-      const canScrollDown = scrollable && (scrollable.scrollTop + scrollable.clientHeight < scrollable.scrollHeight)
+      const focusEl = document.activeElement || null
+      const scrollable = focusEl ? getScrollableAncestor(focusEl, activeSlide) : null
+      const isScrollableAreaFocused = !!scrollable
+      const canScrollUp = !!(scrollable && scrollable.scrollTop > 0)
+      const canScrollDown = !!(scrollable && (scrollable.scrollTop + scrollable.clientHeight < scrollable.scrollHeight))
 
       switch (e.key) {
         case "ArrowLeft":
@@ -130,16 +148,13 @@ class PPTPresentation {
       startX = 0
       startY = 0
     })
-    // 禁用鼠标滚轮触发翻页，只保留内容区域的正常滚动
+    // 禁用鼠标滚轮触发翻页，只保留任何可滚动区域的正常滚动
     document.addEventListener('wheel', (e) => {
       const activeSlide = this.slides[this.currentSlide - 1]
       if (!activeSlide) return
       
-      // 检查是否在可滚动区域
-      const hoveredScrollable = e.target && e.target.closest ? e.target.closest('.content-right') : null
-      const scrollable = hoveredScrollable && activeSlide.contains(hoveredScrollable) ? hoveredScrollable : null
-      
-      // 如果在可滚动区域，允许正常滚动
+      // 检查是否在激活幻灯片中的任意可滚动区域
+      const scrollable = getScrollableAncestor(e.target, activeSlide)
       if (scrollable) {
         return // 允许默认滚动行为
       }

@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LangGraph 工作流程图</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 40px;
+            font-size: 1.2em;
+        }
+        
+        .workflow-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        .node {
+            background: linear-gradient(145deg, #f8f9fa, #e9ecef);
+            border: 3px solid #3498db;
+            border-radius: 15px;
+            padding: 25px;
+            min-width: 300px;
+            text-align: center;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .node:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+            border-color: #2980b9;
+        }
+        
+        .node.start {
+            background: linear-gradient(145deg, #e8f5e8, #c8e6c9);
+            border-color: #27ae60;
+        }
+        
+        .node.end {
+            background: linear-gradient(145deg, #fce4ec, #f8bbd9);
+            border-color: #e91e63;
+        }
+        
+        .node.process {
+            background: linear-gradient(145deg, #e3f2fd, #bbdefb);
+            border-color: #2196f3;
+        }
+        
+        .node-title {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .node-description {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .node-details {
+            background: rgba(255,255,255,0.7);
+            border-radius: 8px;
+            padding: 10px;
+            font-size: 0.9em;
+            color: #666;
+        }
+        
+        .arrow {
+            width: 0;
+            height: 0;
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
+            border-top: 30px solid #3498db;
+            margin: 10px auto;
+            position: relative;
+        }
+        
+        .arrow::after {
+            content: '';
+            position: absolute;
+            top: -35px;
+            left: -15px;
+            width: 30px;
+            height: 4px;
+            background: #3498db;
+        }
+        
+        .state-info {
+            background: #f8f9fa;
+            border-left: 5px solid #3498db;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 0 10px 10px 0;
+        }
+        
+        .state-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        
+        .state-field {
+            margin: 8px 0;
+            padding: 8px 12px;
+            background: white;
+            border-radius: 5px;
+            border-left: 3px solid #3498db;
+        }
+        
+        .field-name {
+            font-weight: bold;
+            color: #2980b9;
+        }
+        
+        .field-type {
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+        
+        .data-flow {
+            background: #fff3cd;
+            border: 2px dashed #ffc107;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .flow-title {
+            font-weight: bold;
+            color: #856404;
+            margin-bottom: 10px;
+        }
+        
+        .flow-content {
+            color: #856404;
+            font-size: 0.95em;
+        }
+        
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 5px;
+            border: 2px solid #333;
+        }
+        
+        .legend-start { background: linear-gradient(145deg, #e8f5e8, #c8e6c9); }
+        .legend-process { background: linear-gradient(145deg, #e3f2fd, #bbdefb); }
+        .legend-end { background: linear-gradient(145deg, #fce4ec, #f8bbd9); }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            
+            .node {
+                min-width: 250px;
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .legend {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔄 LangGraph 工作流程图</h1>
+        <p class="subtitle">聊天机器人的完整处理流程</p>
+        
+        <!-- 状态定义 -->
+        <div class="state-info">
+            <div class="state-title">📊 GraphState 状态定义</div>
+            <div class="state-field">
+                <span class="field-name">messages:</span> 
+                <span class="field-type">List[BaseMessage]</span> - 对话消息列表
+            </div>
+            <div class="state-field">
+                <span class="field-name">user_intent:</span> 
+                <span class="field-type">str</span> - 用户意图分类
+            </div>
+            <div class="state-field">
+                <span class="field-name">current_step:</span> 
+                <span class="field-type">str</span> - 当前处理步骤
+            </div>
+            <div class="state-field">
+                <span class="field-name">conversation_history:</span> 
+                <span class="field-type">List[str]</span> - 对话历史记录
+            </div>
+        </div>
+        
+        <!-- 工作流程 -->
+        <div class="workflow-container">
+            <!-- 开始节点 -->
+            <div class="node start">
+                <div class="node-title">🚀 START</div>
+                <div class="node-description">用户输入消息，工作流开始执行</div>
+                <div class="node-details">
+                    <strong>输入：</strong>用户消息 (HumanMessage)<br>
+                    <strong>触发：</strong>chat() 或 chat_sync() 方法调用
+                </div>
+            </div>
+            
+            <div class="arrow"></div>
+            
+            <!-- 数据流说明 -->
+            <div class="data-flow">
+                <div class="flow-title">📥 数据流入</div>
+                <div class="flow-content">
+                    用户消息被添加到 state.messages 列表中<br>
+                    设置入口点为 "analyze_intent"
+                </div>
+            </div>
+            
+            <!-- 意图分析节点 -->
+            <div class="node process">
+                <div class="node-title">🧠 analyze_intent</div>
+                <div class="node-description">分析用户输入的意图类型</div>
+                <div class="node-details">
+                    <strong>功能：</strong><br>
+                    • 检测问候语 ("你好", "hello")<br>
+                    • 识别告别语 ("再见", "bye")<br>
+                    • 判断是否为问题 (包含 "?")<br>
+                    • 默认分类为 "general_question"<br><br>
+                    <strong>输出：</strong>user_intent, current_step
+                </div>
+            </div>
+            
+            <div class="arrow"></div>
+            
+            <div class="data-flow">
+                <div class="flow-title">🔄 状态更新</div>
+                <div class="flow-content">
+                    state.user_intent = 分析结果<br>
+                    state.current_step = "intent_analyzed"
+                </div>
+            </div>
+            
+            <!-- 回复生成节点 -->
+            <div class="node process">
+                <div class="node-title">💬 generate_response</div>
+                <div class="node-description">使用 LLM 生成智能回复</div>
+                <div class="node-details">
+                    <strong>功能：</strong><br>
+                    • 使用 ChatOpenAI (GPT-3.5-turbo)<br>
+                    • 应用系统提示模板<br>
+                    • 处理用户输入并生成回复<br>
+                    • 将 AI 回复添加到消息列表<br><br>
+                    <strong>输出：</strong>更新的 messages 列表
+                </div>
+            </div>
+            
+            <div class="arrow"></div>
+            
+            <div class="data-flow">
+                <div class="flow-title">🔄 状态更新</div>
+                <div class="flow-content">
+                    state.messages.append(AIMessage)<br>
+                    state.current_step = "response_generated"
+                </div>
+            </div>
+            
+            <!-- 对话保存节点 -->
+            <div class="node process">
+                <div class="node-title">💾 save_conversation</div>
+                <div class="node-description">保存对话历史到内存</div>
+                <div class="node-details">
+                    <strong>功能：</strong><br>
+                    • 提取最近的用户和AI消息<br>
+                    • 格式化对话条目<br>
+                    • 添加到对话历史列表<br>
+                    • 支持多线程对话管理<br><br>
+                    <strong>输出：</strong>更新的 conversation_history
+                </div>
+            </div>
+            
+            <div class="arrow"></div>
+            
+            <div class="data-flow">
+                <div class="flow-title">🔄 状态更新</div>
+                <div class="flow-content">
+                    state.conversation_history.append(格式化对话)<br>
+                    state.current_step = "conversation_saved"
+                </div>
+            </div>
+            
+            <!-- 结束节点 -->
+            <div class="node end">
+                <div class="node-title">🏁 END</div>
+                <div class="node-description">工作流结束，返回最终结果</div>
+                <div class="node-details">
+                    <strong>输出：</strong>完整的状态对象<br>
+                    <strong>返回：</strong>AI 生成的回复内容<br>
+                    <strong>持久化：</strong>通过 MemorySaver 保存状态
+                </div>
+            </div>
+        </div>
+        
+        <!-- 特殊功能说明 -->
+        <div class="state-info">
+            <div class="state-title">🔧 核心特性</div>
+            <div class="state-field">
+                <span class="field-name">检查点保存:</span> 
+                使用 MemorySaver 在每个步骤保存状态
+            </div>
+            <div class="state-field">
+                <span class="field-name">多线程支持:</span> 
+                通过 thread_id 支持并发对话
+            </div>
+            <div class="state-field">
+                <span class="field-name">状态持久化:</span> 
+                对话历史和状态在会话间保持
+            </div>
+            <div class="state-field">
+                <span class="field-name">错误处理:</span> 
+                每个节点都有完善的异常处理机制
+            </div>
+        </div>
+        
+        <!-- 图例 -->
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-color legend-start"></div>
+                <span>开始/结束节点</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color legend-process"></div>
+                <span>处理节点</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color legend-end"></div>
+                <span>终止节点</span>
+            </div>
+        </div>
+        
+        <!-- 执行流程说明 -->
+        <div class="state-info">
+            <div class="state-title">⚡ 执行流程总结</div>
+            <p><strong>1. 初始化：</strong> 用户调用 chat() 方法，传入消息</p>
+            <p><strong>2. 状态准备：</strong> 将用户消息添加到状态的 messages 列表</p>
+            <p><strong>3. 图执行：</strong> 按照定义的边依次执行各个节点</p>
+            <p><strong>4. 状态传递：</strong> 每个节点更新状态并传递给下一个节点</p>
+            <p><strong>5. 检查点保存：</strong> 在每个步骤自动保存状态到内存</p>
+            <p><strong>6. 结果返回：</strong> 提取AI回复并返回给用户</p>
+        </div>
+    </div>
+</body>
+</html>
