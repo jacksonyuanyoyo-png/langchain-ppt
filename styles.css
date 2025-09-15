@@ -437,7 +437,7 @@ body {
   display: flex;
   gap: var(--space-8);
   min-height: 0;
-  overflow: hidden;
+  overflow: visible;
   height: calc(100vh - 140px - 80px);
 }
 
@@ -882,32 +882,7 @@ body {
   padding-right: var(--space-3);
 }
 
-#slide-6 .column-right {
-  overflow-y: auto;
-  max-height: calc(100vh - 140px - 80px);
-  gap: var(--space-5);
-  padding: var(--space-4) var(--space-3);
-  background: #fafafa;
-  border-radius: 12px;
-  border: 1px solid #e5e7eb;
-}
-
-#slide-7 .column-center {
-  overflow-y: auto;
-  max-height: calc(100vh - 140px - 80px);
-  gap: var(--space-4);
-  padding-right: var(--space-3);
-}
-
-#slide-7 .column-right {
-  overflow-y: auto;
-  max-height: calc(100vh - 140px - 80px);
-  gap: var(--space-5);
-  padding: var(--space-4) var(--space-3);
-  background: #fafafa;
-  border-radius: 12px;
-  border: 1px solid #e5e7eb;
-}
+/* 这些样式已合并到统一的column-right样式中，删除重复定义 */
 
 /* 代码区域优化 */
 #slide-6 .code-section {
@@ -3493,6 +3468,9 @@ body.has-priority-banner {
   padding-right: var(--space-3);
 }
 
+/* 统一的column-right滚动样式 */
+#slide-6 .column-right,
+#slide-7 .column-right,
 #slide-8 .column-right,
 #slide-9 .column-right,
 #slide-10 .column-right,
@@ -3508,6 +3486,55 @@ body.has-priority-banner {
   background: #fafafa;
   border-radius: 12px;
   border: 1px solid #e5e7eb;
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary-blue) transparent;
+}
+
+/* column-right Webkit滚动条样式 */
+#slide-6 .column-right::-webkit-scrollbar,
+#slide-7 .column-right::-webkit-scrollbar,
+#slide-8 .column-right::-webkit-scrollbar,
+#slide-9 .column-right::-webkit-scrollbar,
+#slide-10 .column-right::-webkit-scrollbar,
+#slide-11 .column-right::-webkit-scrollbar,
+#slide-12 .column-right::-webkit-scrollbar,
+#slide-18 .column-right::-webkit-scrollbar {
+  width: 8px;
+}
+
+#slide-6 .column-right::-webkit-scrollbar-track,
+#slide-7 .column-right::-webkit-scrollbar-track,
+#slide-8 .column-right::-webkit-scrollbar-track,
+#slide-9 .column-right::-webkit-scrollbar-track,
+#slide-10 .column-right::-webkit-scrollbar-track,
+#slide-11 .column-right::-webkit-scrollbar-track,
+#slide-12 .column-right::-webkit-scrollbar-track,
+#slide-18 .column-right::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 4px;
+}
+
+#slide-6 .column-right::-webkit-scrollbar-thumb,
+#slide-7 .column-right::-webkit-scrollbar-thumb,
+#slide-8 .column-right::-webkit-scrollbar-thumb,
+#slide-9 .column-right::-webkit-scrollbar-thumb,
+#slide-10 .column-right::-webkit-scrollbar-thumb,
+#slide-11 .column-right::-webkit-scrollbar-thumb,
+#slide-12 .column-right::-webkit-scrollbar-thumb,
+#slide-18 .column-right::-webkit-scrollbar-thumb {
+  background: var(--primary-blue);
+  border-radius: 4px;
+}
+
+#slide-6 .column-right::-webkit-scrollbar-thumb:hover,
+#slide-7 .column-right::-webkit-scrollbar-thumb:hover,
+#slide-8 .column-right::-webkit-scrollbar-thumb:hover,
+#slide-9 .column-right::-webkit-scrollbar-thumb:hover,
+#slide-10 .column-right::-webkit-scrollbar-thumb:hover,
+#slide-11 .column-right::-webkit-scrollbar-thumb:hover,
+#slide-12 .column-right::-webkit-scrollbar-thumb:hover,
+#slide-18 .column-right::-webkit-scrollbar-thumb:hover {
+  background: var(--blue-600);
 }
 
 /* 演示4-8代码区域样式 */
@@ -3578,17 +3605,72 @@ body.has-priority-banner {
   margin-bottom: 16px;
 }
 
-/* 演示4-8 Markdown内容样式 */
+/* 演示4-8 和所有Markdown内容样式 */
+#slide-6 .markdown-content,
+#slide-7 .markdown-content,
 #slide-8 .markdown-content,
 #slide-9 .markdown-content,
 #slide-10 .markdown-content,
 #slide-11 .markdown-content,
 #slide-12 .markdown-content,
+#slide-18 .markdown-content,
 #slide-19 .markdown-content {
   background: transparent;
   padding: var(--space-2);
   overflow-y: auto;
-  max-height: calc(100vh - 140px - 80px);
+  max-height: calc(100vh - 200px);
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary-blue) transparent;
+}
+
+/* Webkit 滚动条样式 */
+#slide-6 .markdown-content::-webkit-scrollbar,
+#slide-7 .markdown-content::-webkit-scrollbar,
+#slide-8 .markdown-content::-webkit-scrollbar,
+#slide-9 .markdown-content::-webkit-scrollbar,
+#slide-10 .markdown-content::-webkit-scrollbar,
+#slide-11 .markdown-content::-webkit-scrollbar,
+#slide-12 .markdown-content::-webkit-scrollbar,
+#slide-18 .markdown-content::-webkit-scrollbar,
+#slide-19 .markdown-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+#slide-6 .markdown-content::-webkit-scrollbar-track,
+#slide-7 .markdown-content::-webkit-scrollbar-track,
+#slide-8 .markdown-content::-webkit-scrollbar-track,
+#slide-9 .markdown-content::-webkit-scrollbar-track,
+#slide-10 .markdown-content::-webkit-scrollbar-track,
+#slide-11 .markdown-content::-webkit-scrollbar-track,
+#slide-12 .markdown-content::-webkit-scrollbar-track,
+#slide-18 .markdown-content::-webkit-scrollbar-track,
+#slide-19 .markdown-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+#slide-6 .markdown-content::-webkit-scrollbar-thumb,
+#slide-7 .markdown-content::-webkit-scrollbar-thumb,
+#slide-8 .markdown-content::-webkit-scrollbar-thumb,
+#slide-9 .markdown-content::-webkit-scrollbar-thumb,
+#slide-10 .markdown-content::-webkit-scrollbar-thumb,
+#slide-11 .markdown-content::-webkit-scrollbar-thumb,
+#slide-12 .markdown-content::-webkit-scrollbar-thumb,
+#slide-18 .markdown-content::-webkit-scrollbar-thumb,
+#slide-19 .markdown-content::-webkit-scrollbar-thumb {
+  background: var(--primary-blue);
+  border-radius: 3px;
+}
+
+#slide-6 .markdown-content::-webkit-scrollbar-thumb:hover,
+#slide-7 .markdown-content::-webkit-scrollbar-thumb:hover,
+#slide-8 .markdown-content::-webkit-scrollbar-thumb:hover,
+#slide-9 .markdown-content::-webkit-scrollbar-thumb:hover,
+#slide-10 .markdown-content::-webkit-scrollbar-thumb:hover,
+#slide-11 .markdown-content::-webkit-scrollbar-thumb:hover,
+#slide-12 .markdown-content::-webkit-scrollbar-thumb:hover,
+#slide-18 .markdown-content::-webkit-scrollbar-thumb:hover,
+#slide-19 .markdown-content::-webkit-scrollbar-thumb:hover {
+  background: var(--blue-600);
 }
 
 #slide-8 .markdown-content h2,
