@@ -25,7 +25,7 @@
 }
 
 body {
-  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
   background: var(--background-secondary);
   color: var(--text-primary);
   overflow: hidden;
@@ -3583,7 +3583,8 @@ body.has-priority-banner {
 #slide-9 .markdown-content,
 #slide-10 .markdown-content,
 #slide-11 .markdown-content,
-#slide-12 .markdown-content {
+#slide-12 .markdown-content,
+#slide-19 .markdown-content {
   background: transparent;
   padding: var(--space-2);
   overflow-y: auto;
@@ -3594,7 +3595,8 @@ body.has-priority-banner {
 #slide-9 .markdown-content h2,
 #slide-10 .markdown-content h2,
 #slide-11 .markdown-content h2,
-#slide-12 .markdown-content h2 {
+#slide-12 .markdown-content h2,
+#slide-19 .markdown-content h2 {
   color: var(--text-primary);
   font-size: 16px;
   font-weight: 600;
@@ -3607,7 +3609,8 @@ body.has-priority-banner {
 #slide-9 .markdown-content h2:first-child,
 #slide-10 .markdown-content h2:first-child,
 #slide-11 .markdown-content h2:first-child,
-#slide-12 .markdown-content h2:first-child {
+#slide-12 .markdown-content h2:first-child,
+#slide-19 .markdown-content h2:first-child {
   margin-top: 0;
 }
 
@@ -3615,7 +3618,8 @@ body.has-priority-banner {
 #slide-9 .markdown-content table,
 #slide-10 .markdown-content table,
 #slide-11 .markdown-content table,
-#slide-12 .markdown-content table {
+#slide-12 .markdown-content table,
+#slide-19 .markdown-content table {
   width: 100%;
   border-collapse: collapse;
   margin: var(--space-2) 0;
@@ -3630,7 +3634,8 @@ body.has-priority-banner {
 #slide-9 .markdown-content table th,
 #slide-10 .markdown-content table th,
 #slide-11 .markdown-content table th,
-#slide-12 .markdown-content table th {
+#slide-12 .markdown-content table th,
+#slide-19 .markdown-content table th {
   background: var(--grey-50);
   color: var(--text-primary);
   font-weight: 600;
@@ -3644,11 +3649,55 @@ body.has-priority-banner {
 #slide-9 .markdown-content table td,
 #slide-10 .markdown-content table td,
 #slide-11 .markdown-content table td,
-#slide-12 .markdown-content table td {
+#slide-12 .markdown-content table td,
+#slide-19 .markdown-content table td {
   padding: var(--space-2);
   border-bottom: 1px solid var(--border-light);
   color: var(--text-secondary);
   font-size: 13px;
+}
+
+/* 为slide-19添加额外的markdown样式 */
+#slide-19 .markdown-content h3 {
+  color: var(--text-primary);
+  font-size: 15px;
+  font-weight: 600;
+  margin: var(--space-2) 0 var(--space-1) 0;
+}
+
+#slide-19 .markdown-content p {
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.5;
+  margin: var(--space-1) 0;
+}
+
+#slide-19 .markdown-content ul {
+  margin: var(--space-1) 0;
+  padding-left: var(--space-3);
+}
+
+#slide-19 .markdown-content li {
+  margin-bottom: var(--space-1);
+  line-height: 1.4;
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+#slide-19 .markdown-content li::marker {
+  color: var(--primary-blue);
+}
+
+#slide-19 .markdown-content strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+#slide-19 .markdown-content hr {
+  border: none;
+  height: 1px;
+  background: var(--border-light);
+  margin: var(--space-3) 0;
 }
 
 /* LangGraph 特定样式 */
