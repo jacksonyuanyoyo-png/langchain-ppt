@@ -25,6 +25,9 @@ class PPTPresentation {
     this.updateSlideCounter()
     this.updateNavigation()
     this.initCodeHighlighting()
+    this.initCardNavigation()
+    this.initPriorityBanner()
+    this.initMarkdownRendering()
 
     // 初始隐藏导航
     document.querySelector('.navigation')?.classList.remove('show')
@@ -79,10 +82,18 @@ class PPTPresentation {
       }
     })
 
-    // 点击圆点导航
+    // 点击圆点导航 - 支持按钮式导航点
     this.activeDots.forEach((dot, index) => {
       dot.addEventListener("click", () => {
         this.goToSlide(index + 1)
+      })
+      
+      // 为按钮式导航点添加键盘支持
+      dot.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault()
+          this.goToSlide(index + 1)
+        }
       })
     })
 
@@ -172,6 +183,7 @@ class PPTPresentation {
     this.slides[this.currentSlide - 1].classList.remove("active")
     if (this.activeDots[this.currentSlide - 1]) {
       this.activeDots[this.currentSlide - 1].classList.remove("active")
+      this.activeDots[this.currentSlide - 1].removeAttribute("aria-current")
     }
 
     // 设置新的活动幻灯片
@@ -179,6 +191,7 @@ class PPTPresentation {
     this.slides[this.currentSlide - 1].classList.add("active")
     if (this.activeDots[this.currentSlide - 1]) {
       this.activeDots[this.currentSlide - 1].classList.add("active")
+      this.activeDots[this.currentSlide - 1].setAttribute("aria-current", "page")
     }
 
     this.updateSlideCounter()
@@ -186,6 +199,16 @@ class PPTPresentation {
 
     // 添加切换动画
     this.animateSlideTransition()
+
+    // 根据幻灯片内容显示相关横幅
+    this.checkSlideSpecificBanners(slideNumber)
+
+    // 重新应用代码高亮
+    if (typeof hljs !== 'undefined') {
+      setTimeout(() => {
+        hljs.highlightAll()
+      }, 100)
+    }
 
     // 切换幻灯片后不自动改变导航显示，由按钮控制
   }
@@ -266,44 +289,245 @@ class PPTPresentation {
     }
   }
 
-  // 代码高亮功能（简单版）
+  // 代码高亮功能（使用 Highlight.js）
   initCodeHighlighting() {
-    const codeBlocks = document.querySelectorAll('pre code')
-    codeBlocks.forEach(block => {
-      this.highlightCode(block)
+    // 清理可能已经被处理过的代码块，然后使用 Highlight.js
+    if (typeof hljs !== 'undefined') {
+      // 先清理所有代码块中的内联样式
+      const codeBlocks = document.querySelectorAll('pre code')
+      codeBlocks.forEach(block => {
+        // 移除可能存在的内联样式
+        const text = block.textContent || block.innerText
+        block.innerHTML = text
+      })
+      
+      // 然后应用 Highlight.js
+      hljs.highlightAll()
+    }
+  }
+
+  // 检查特定幻灯片的横幅显示
+  checkSlideSpecificBanners(slideNumber) {
+    // 这里可以根据不同的幻灯片显示不同的横幅
+    // 目前保持空实现
+  }
+
+  // 初始化卡片导航功能 - 符合Fidelity Standard Card规范
+  initCardNavigation() {
+    const cards = document.querySelectorAll('.fidelity-standard-card')
+    
+    cards.forEach(card => {
+      // 为卡片添加键盘导航支持
+      card.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault()
+          // 查找卡片内的主要链接并触发
+          const primaryLink = card.querySelector('.fidelity-card-link')
+          if (primaryLink) {
+            this.handleCardNavigation(primaryLink.getAttribute('href'))
+          }
+        }
+      })
+
+      // 为卡片内的链接添加导航处理
+      const links = card.querySelectorAll('a[href^="#slide-"]')
+      links.forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault()
+          this.handleCardNavigation(link.getAttribute('href'))
+        })
+      })
     })
   }
 
-  highlightCode(codeBlock) {
-    let code = codeBlock.innerHTML
+  // 处理卡片导航到指定幻灯片
+  handleCardNavigation(href) {
+    if (!href || !href.startsWith('#slide-')) return
     
-    // Python 关键字高亮
-    const pythonKeywords = [
-      'from', 'import', 'def', 'class', 'if', 'else', 'elif', 'for', 'while', 
-      'try', 'except', 'finally', 'with', 'as', 'return', 'yield', 'break', 
-      'continue', 'pass', 'and', 'or', 'not', 'in', 'is', 'True', 'False', 'None'
-    ]
+    const slideNumber = parseInt(href.replace('#slide-', ''))
+    if (slideNumber >= 1 && slideNumber <= this.totalSlides) {
+      console.log(`卡片导航到幻灯片 ${slideNumber}`)
+      this.goToSlide(slideNumber)
+      
+      // 添加视觉反馈
+      this.showNavigationFeedback(`跳转到第${slideNumber}张幻灯片`)
+    }
+  }
+
+  // 显示导航反馈
+  showNavigationFeedback(message) {
+    // 创建临时提示元素
+    const feedback = document.createElement('div')
+    feedback.textContent = message
+    feedback.style.cssText = `
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: var(--primary-blue);
+      color: white;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      z-index: 10000;
+      box-shadow: 0 4px 12px rgba(0, 97, 147, 0.3);
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+    `
     
-    // 高亮注释
-    code = code.replace(/(#.*)/g, '<span style="color: #6a9955; font-style: italic;">$1</span>')
+    document.body.appendChild(feedback)
     
-    // 高亮字符串
-    code = code.replace(/(['"`])(.*?)\1/g, '<span style="color: #ce9178;">$1$2$1</span>')
-    
-    // 高亮 Python 关键字
-    pythonKeywords.forEach(keyword => {
-      const regex = new RegExp(`\\b${keyword}\\b`, 'g')
-      code = code.replace(regex, `<span style="color: #569cd6; font-weight: bold;">${keyword}</span>`)
+    // 动画显示
+    requestAnimationFrame(() => {
+      feedback.style.transform = 'translateX(0)'
     })
     
-    // 高亮函数调用
-    code = code.replace(/(\w+)(\()/g, '<span style="color: #dcdcaa;">$1</span>$2')
-    
-    // 高亮数字
-    code = code.replace(/\b(\d+\.?\d*)\b/g, '<span style="color: #b5cea8;">$1</span>')
-    
-    codeBlock.innerHTML = code
+    // 3秒后移除
+    setTimeout(() => {
+      feedback.style.transform = 'translateX(100%)'
+      setTimeout(() => {
+        document.body.removeChild(feedback)
+      }, 300)
+    }, 3000)
   }
+
+  // 初始化Priority Banner功能 - 符合Fidelity规范
+  initPriorityBanner() {
+    const banner = document.getElementById('priorityBanner')
+    if (!banner) return
+
+    // 检查横幅是否已被关闭（会话持久性）
+    const bannerKey = 'fidelity-priority-banner-dismissed'
+    const isDismissed = sessionStorage.getItem(bannerKey) === 'true'
+
+    if (!isDismissed) {
+      this.showPriorityBanner()
+    }
+
+    // 关闭按钮事件
+    const closeButton = banner.querySelector('.fidelity-banner-close')
+    if (closeButton) {
+      closeButton.addEventListener('click', (e) => {
+        this.dismissPriorityBanner()
+        // 恢复焦点到上一个活动元素
+        if (this.lastActiveElement) {
+          this.lastActiveElement.focus()
+        }
+      })
+
+      // 键盘支持
+      closeButton.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault()
+          this.dismissPriorityBanner()
+          if (this.lastActiveElement) {
+            this.lastActiveElement.focus()
+          }
+        }
+      })
+    }
+
+    // 横幅内链接处理
+    const bannerLink = banner.querySelector('.fidelity-banner-link')
+    if (bannerLink) {
+      bannerLink.addEventListener('click', (e) => {
+        e.preventDefault()
+        const href = bannerLink.getAttribute('href')
+        if (href && href.startsWith('#slide-')) {
+          this.handleCardNavigation(href)
+          // 可选：点击链接后自动关闭横幅
+          // this.dismissPriorityBanner()
+        }
+      })
+    }
+
+    // 记录当前活动元素（用于焦点恢复）
+    document.addEventListener('focusin', (e) => {
+      if (!banner.contains(e.target)) {
+        this.lastActiveElement = e.target
+      }
+    })
+  }
+
+  // 显示Priority Banner
+  showPriorityBanner() {
+    const banner = document.getElementById('priorityBanner')
+    if (!banner) return
+
+    // 添加body类名以调整页面布局
+    document.body.classList.add('has-priority-banner')
+    
+    // 显示横幅
+    banner.classList.add('show', 'animating-in')
+    
+    setTimeout(() => {
+      banner.classList.remove('animating-in')
+    }, 300)
+
+    console.log('Priority Banner已显示')
+  }
+
+  // 关闭Priority Banner
+  dismissPriorityBanner() {
+    const banner = document.getElementById('priorityBanner')
+    if (!banner) return
+
+    // 记录横幅已被关闭（会话持久性）
+    const bannerKey = 'fidelity-priority-banner-dismissed'
+    sessionStorage.setItem(bannerKey, 'true')
+
+    // 添加关闭动画
+    banner.classList.add('animating-out')
+    
+    setTimeout(() => {
+      banner.classList.remove('show', 'animating-out')
+      document.body.classList.remove('has-priority-banner')
+    }, 300)
+
+    console.log('Priority Banner已关闭并记录到会话存储')
+  }
+
+  // 显示不同类型的横幅
+  showInfoBanner(message, linkText = '', linkHref = '') {
+    this.showCustomBanner('info', 'ℹ️', message, linkText, linkHref)
+  }
+
+  showWarningBanner(message, linkText = '', linkHref = '') {
+    this.showCustomBanner('warning', '⚠️', message, linkText, linkHref)
+  }
+
+  // 显示自定义横幅
+  showCustomBanner(type, icon, message, linkText = '', linkHref = '') {
+    // 检查字符限制（符合Fidelity规范）
+    const maxChars = 130 // 默认版本最多130字符
+    if (message.length > maxChars) {
+      console.warn(`横幅消息超过${maxChars}字符限制: ${message.length}`)
+      message = message.substring(0, maxChars - 3) + '...'
+    }
+
+    const banner = document.getElementById('priorityBanner')
+    if (!banner) return
+
+    // 更新横幅内容
+    banner.className = `fidelity-priority-banner ${type}`
+    
+    const iconElement = banner.querySelector('.fidelity-banner-icon')
+    const messageElement = banner.querySelector('.fidelity-banner-message')
+    const linkElement = banner.querySelector('.fidelity-banner-link')
+
+    if (iconElement) iconElement.textContent = icon
+    if (messageElement) {
+      messageElement.innerHTML = message
+      if (linkText && linkHref) {
+        messageElement.innerHTML += ` <a href="${linkHref}" class="fidelity-banner-link">${linkText}</a>`
+      }
+    }
+
+    // 重置会话存储并显示
+    sessionStorage.removeItem('fidelity-priority-banner-dismissed')
+    this.showPriorityBanner()
+  }
+
 }
 
 // 初始化演示
@@ -359,3 +583,33 @@ window.addEventListener("load", () => {
   styleSheet.textContent = printStyles
   document.head.appendChild(styleSheet)
 })
+
+// 为PPTPresentation类添加markdown渲染方法
+PPTPresentation.prototype.initMarkdownRendering = function() {
+  if (typeof marked !== 'undefined') {
+    // 配置marked选项
+    marked.setOptions({
+      breaks: true,
+      gfm: true
+    })
+    
+    // 渲染所有markdown内容
+    this.renderMarkdownContent()
+  }
+}
+
+PPTPresentation.prototype.renderMarkdownContent = function() {
+  // 查找所有markdown源
+  const markdownSources = document.querySelectorAll('script[type="text/markdown"]')
+  
+  markdownSources.forEach(source => {
+    const sourceId = source.id
+    const targetId = sourceId.replace('markdown-source-', 'markdown-content-')
+    const targetElement = document.getElementById(targetId)
+    
+    if (targetElement) {
+      const markdownText = source.textContent || source.innerText
+      targetElement.innerHTML = marked.parse(markdownText)
+    }
+  })
+}

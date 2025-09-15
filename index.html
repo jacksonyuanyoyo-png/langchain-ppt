@@ -1,38 +1,56 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LangChain 基础入门 - PPT演示</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="highlight.css">
+    <script src="marked.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
+
 <body>
+    <!-- Fidelity Priority Banner - 重要信息通知 -->
+    <div id="priorityBanner" class="fidelity-priority-banner info" role="banner" aria-live="polite">
+        <div class="fidelity-banner-content default">
+            <div class="fidelity-banner-icon" aria-hidden="true">ℹ️</div>
+            <p class="fidelity-banner-message">
+                <strong>重要提醒：</strong>本演示需要有效的OpenAI API Key。请确保在实际操作前配置好API访问权限。
+                <a href="#slide-5" class="fidelity-banner-link">查看配置说明</a>
+            </p>
+            <button class="fidelity-banner-close" aria-label="关闭通知横幅" type="button">
+                ×
+            </button>
+        </div>
+    </div>
+
     <!-- 幻灯片容器 -->
     <div class="presentation-container">
         <!-- 幻灯片 1: 封面页 -->
         <div class="slide active" id="slide-1">
             <div class="slide-header">
                 <div class="logo">
-                    <img src="fidelity-white.svg" alt="Fidelity International" class="logo-svg">
+                    <img src="fidelity-white.svg" alt="Fidelity International logo in white, featuring the company name in clean typography for the cover slide" class="logo-svg">
                 </div>
             </div>
-            
+
             <div class="cover-content">
                 <div class="cover-left">
                     <h1 class="cover-title">LangChain 基础入门</h1>
                     <div class="cover-underline"></div>
                     <h2 class="cover-subtitle">从零开始理解 LangChain</h2>
-                    <div class="cover-details">
+                    <!-- <div class="cover-details">
                         <p>实际演示代码与应用场景</p>
                         <p>构建你的第一个 AI 应用</p>
                         <p class="cover-date">技术培训 - 2024</p>
-                    </div>
+                    </div> -->
                 </div>
             </div>
-            
+
             <div class="slide-footer">
                 <p>For technical training use only</p>
             </div>
@@ -42,53 +60,80 @@
         <div class="slide" id="slide-2">
             <div class="slide-header">
                 <div class="logo">
-                    <img src="fidelity-international.svg" alt="Fidelity International" class="logo-svg">
+                    <img src="fidelity-international.svg" alt="Fidelity International corporate logo in blue, representing the professional brand identity" class="logo-svg">
                 </div>
             </div>
-            
+
             <h1 class="slide-title">什么是 LangChain？</h1>
-            
-            <div class="content-layout">
-                <div class="content-left">
+
+            <!-- 横向布局 - 三列设计 -->
+            <div class="horizontal-layout">
+                <!-- 左列：定义和核心理念 -->
+                <div class="column-left">
                     <div class="theme-section">
                         <h2 class="theme-title">LangChain 定义</h2>
                         <div class="theme-underline blue"></div>
+                        <p class="theme-subtitle">开源 AI 应用开发框架</p>
+                    </div>
+
+                    <div class="bullet-point compact">
+                        <strong>LangChain 是什么？</strong>
+                        <ul class="sub-points fidelity-bulleted-list">
+                            <li>基于大语言模型（LLM）的开源框架</li>
+                            <li>标准化接口和工具集</li>
+                            <li>简化 AI 应用开发流程</li>
+                            <li>支持 Python 和 JavaScript</li>
+                        </ul>
+                    </div>
+
+                    <div class="bullet-point compact">
+                        <strong>核心理念</strong>
+                        <ul class="sub-points">
+                            <li>LLM 与外部数据源连接</li>
+                            <li>支持多步骤推理</li>
+                            <li>模块化、可复用组件</li>
+                            <li>"链式"思维组合 AI 能力</li>
+                        </ul>
                     </div>
                 </div>
-                
-                <div class="content-right">
-                    <div class="bullet-points">
-                        <div class="bullet-point">
-                            <span class="bullet">•</span>
-                            <div>
-                                <strong>LangChain 是什么？</strong>
-                                <ul class="sub-points">
-                                    <li>一个用于构建基于大语言模型（LLM）应用的开源框架</li>
-                                    <li>提供了一套标准化的接口和工具</li>
-                                    <li>简化了复杂 AI 应用的开发流程</li>
-                                </ul>
-                            </div>
-                        </div>
-                        
-                        <div class="bullet-point">
-                            <span class="bullet">•</span>
-                            <div>
-                                <strong>核心理念</strong>
-                                <ul class="sub-points">
-                                    <li>将 LLM 与外部数据源连接</li>
-                                    <li>支持复杂的多步骤推理</li>
-                                    <li>提供模块化、可复用的组件</li>
-                                </ul>
-                            </div>
-                        </div>
-                        
-                        <div class="version-note">
-                            <strong>版本说明：</strong> 本演示基于 LangChain 0.0.235（固定版本避免接口变化）
-                        </div>
+
+                <!-- 中列：优势和特点 -->
+                <div class="column-center">
+                    <div class="bullet-point compact">
+                        <strong>为什么选择 LangChain？</strong>
+                        <ul class="sub-points">
+                            <li><strong>降低门槛：</strong>无需深度学习专业知识</li>
+                            <li><strong>快速原型：</strong>几行代码实现复杂功能</li>
+                            <li><strong>生态丰富：</strong>支持主流 LLM 集成</li>
+                            <li><strong>社区活跃：</strong>GitHub 80k+ Stars</li>
+                        </ul>
                     </div>
+
+                    <div class="bullet-point compact">
+                        <strong>适用场景</strong>
+                        <ul class="sub-points">
+                            <li>🤖 智能聊天机器人</li>
+                            <li>� 文档问答系统</li>生
+                            <li>🔍 智能搜索引擎</li>
+                            <li>📊 数据分析助手</li>
+                            <li>🛠️ 代码生成工具</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 右列：核心优势和版本信息 -->
+                <div class="column-right">
+                    <div class="fidelity-pullout-banner" role="region" aria-label="核心优势重点信息" tabindex="0">
+                        <strong>核心优势</strong>
+                        <p>LangChain 让开发者能够像搭积木一样构建 AI 应用，无需从零开始编写复杂的 AI 逻辑</p>
+                    </div>
+
+                    <!-- <div class="version-note">
+                        <strong>版本说明：</strong> 本演示基于 LangChain 0.0.235（固定版本避免接口变化）
+                    </div> -->
                 </div>
             </div>
-            
+
             <div class="slide-footer">
                 <span class="page-number">2</span>
                 <div class="footer-logo">
@@ -104,18 +149,14 @@
                     <img src="fidelity-international.svg" alt="Fidelity International" class="logo-svg">
                 </div>
             </div>
-            
+
             <h1 class="slide-title">LangChain 核心架构</h1>
-            
+
+            <!-- 新的左右布局 -->
             <div class="content-layout">
+                <!-- 左侧：架构图 + 核心架构概览 -->
                 <div class="content-left">
-                    <div class="theme-section">
-                        <h2 class="theme-title">主要组件与数据流</h2>
-                        <div class="theme-underline orange"></div>
-                    </div>
-                </div>
-                
-                <div class="content-right">
+                    <!-- 架构图 -->
                     <div class="architecture-diagram">
                         <div class="arch-row">
                             <div class="arch-box">Models<br><span class="arch-desc">(模型层)</span></div>
@@ -130,25 +171,73 @@
                         </div>
                         <div class="arch-arrow-down"></div>
                         <div class="arch-row single">
-                            <div class="arch-box wide">Data Connections<br><span class="arch-desc">(数据连接层)</span><br><small>Loaders → Splitters → Embeddings → Stores</small></div>
+                            <div class="arch-box wide">Data Connections<br><span
+                                    class="arch-desc">(数据连接层)</span><br><small>Loaders → Splitters → Embeddings →
+                                    Stores</small></div>
                         </div>
                     </div>
-                    
-                    <div class="component-list">
-                        <h3>组件说明</h3>
-                        <ul>
-                            <li><strong>Models:</strong> 统一的 LLM 接口（OpenAI、Anthropic 等）</li>
-                            <li><strong>Prompts:</strong> 提示词模板与动态生成</li>
-                            <li><strong>Parsers:</strong> 结构化输出解析</li>
-                            <li><strong>Chains:</strong> 组件串联的工作流</li>
-                            <li><strong>Memory:</strong> 对话历史管理</li>
-                            <li><strong>Agents:</strong> 基于 LLM 的智能决策</li>
-                            <li><strong>Data Connections:</strong> 外部数据集成</li>
-                        </ul>
+
+                    <!-- 架构图下方：核心架构概览 -->
+                    <div class="theme-section" style="margin-top: 30px;">
+                        <h2 class="theme-title">核心架构概览</h2>
+                        <div class="theme-underline orange"></div>
+                        <p class="theme-subtitle">六大模块 + 数据连接层</p>
+                        <p class="theme-subtitle">Models/Prompts/Parsers/Memory/Chains/Agents + Data Connections</p>
+                    </div>
+                </div>
+
+                <!-- 右侧：四个主要部分 -->
+                <div class="content-right">
+                    <!-- 层级结构 -->
+                    <div class="right-section">
+                        <div class="bullet-point compact">
+                            <strong>层级结构</strong>
+                            <ul class="sub-points">
+                                <li>Models · Prompts · Parsers（输入/输出与提示词）</li>
+                                <li>Memory · Chains · Agents（对话记忆/工作流/智能代理）</li>
+                                <li>Data Connections（Loaders → Splitters → Embeddings → Stores）</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- 关键路径 -->
+                    <div class="right-section">
+                        <div class="bullet-point compact">
+                            <strong>关键路径</strong>
+                            <ul class="sub-points">
+                                <li>用户问题 → 提示词模板 → 模型推理 → 结构化解析</li>
+                                <li>历史上下文 → 记忆模块 → 连贯对话</li>
+                                <li>外部数据 → 切分/嵌入 → 向量检索 → 强化回答</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- 组件说明 -->
+                    <div class="right-section">
+                        <div class="component-list">
+                            <h3>组件说明</h3>
+                            <ul>
+                                <li><strong>Models:</strong> 统一的 LLM 接口（OpenAI、Anthropic 等）</li>
+                                <li><strong>Prompts:</strong> 提示词模板与动态生成</li>
+                                <li><strong>Parsers:</strong> 结构化输出解析</li>
+                                <li><strong>Chains:</strong> 组件串联的工作流</li>
+                                <li><strong>Memory:</strong> 对话历史管理</li>
+                                <li><strong>Agents:</strong> 基于 LLM 的智能决策</li>
+                                <li><strong>Data Connections:</strong> 外部数据集成</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- 工作原理要点 -->
+                    <div class="right-section">
+                        <div class="fidelity-pullout-standard" role="region" aria-label="核心机制说明" tabindex="0">
+                            <strong>工作原理要点</strong>
+                            <p>通过标准化接口将提示词、模型、解析器与记忆组件串联为可复用链条；结合向量检索将外部知识无缝接入，既提升准确性也保障可控性。</p>
+                        </div>
                     </div>
                 </div>
             </div>
-            
+
             <div class="slide-footer">
                 <span class="page-number">3</span>
                 <div class="footer-logo">
@@ -157,81 +246,7 @@
             </div>
         </div>
 
-        <!-- 幻灯片 4: LangChain 能用来做什么？ -->
-        <div class="slide" id="slide-4">
-            <div class="slide-header">
-                <div class="logo">
-                    <img src="fidelity-international.svg" alt="Fidelity International" class="logo-svg">
-                </div>
-            </div>
-            
-            <h1 class="slide-title">LangChain 能用来做什么？</h1>
-            
-            <div class="content-layout">
-                <div class="content-left">
-                    <div class="theme-section">
-                        <h2 class="theme-title">真实应用场景</h2>
-                        <div class="theme-underline yellow"></div>
-                        <p class="theme-subtitle">（配合演示代码）</p>
-                    </div>
-                </div>
-                
-                <div class="content-right">
-                    <div class="use-cases">
-                        <div class="use-case">
-                            <div class="use-case-icon">📄</div>
-                            <div class="use-case-content">
-                                <h3>文档问答系统</h3>
-                                <ul>
-                                    <li>84页PDF文档智能问答（Demo 10）</li>
-                                    <li>企业知识库检索与回答</li>
-                                </ul>
-                            </div>
-                        </div>
-                        
-                        <div class="use-case">
-                            <div class="use-case-icon">🤖</div>
-                            <div class="use-case-content">
-                                <h3>智能聊天机器人</h3>
-                                <ul>
-                                    <li>带记忆的多轮对话（Demo 07）</li>
-                                    <li>上下文理解与响应</li>
-                                </ul>
-                            </div>
-                        </div>
-                        
-                        <div class="use-case">
-                            <div class="use-case-icon">🔍</div>
-                            <div class="use-case-content">
-                                <h3>智能搜索代理</h3>
-                                <ul>
-                                    <li>网络搜索+数学计算（Demo 08）</li>
-                                    <li>多工具协同解决复杂问题</li>
-                                </ul>
-                            </div>
-                        </div>
-                        
-                        <div class="use-case">
-                            <div class="use-case-icon">📊</div>
-                            <div class="use-case-content">
-                                <h3>结构化数据提取</h3>
-                                <ul>
-                                    <li>JSON格式输出解析（Demo 05）</li>
-                                    <li>自动化数据处理</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="slide-footer">
-                <span class="page-number">4</span>
-                <div class="footer-logo">
-                    <img src="fidelity-international.svg" alt="Fidelity International" class="logo-svg">
-                </div>
-            </div>
-        </div>
+        
 
         <!-- 幻灯片 5: 演示 1 - Hello LangChain -->
         <div class="slide" id="slide-5">
@@ -240,9 +255,9 @@
                     <img src="fidelity-international.svg" alt="Fidelity International" class="logo-svg">
                 </div>
             </div>
-            
+
             <h1 class="slide-title">演示 1 - Hello LangChain</h1>
-            
+
             <div class="content-layout">
                 <div class="content-left">
                     <div class="theme-section">
@@ -251,11 +266,12 @@
                         <p class="theme-subtitle">（来自 Demo 01）</p>
                     </div>
                 </div>
-                
+
                 <div class="content-right">
                     <div class="code-section">
-                        <pre><code># 安装依赖
-!pip install langchain==0.0.235 openai
+                        <h3>完整代码示例</h3>
+                        <pre><code class="language-python"># 安装依赖
+!pip install langchain openai
 
 # 导入必要模块
 from langchain.chat_models import ChatOpenAI
@@ -270,22 +286,23 @@ chat = ChatOpenAI(temperature=0)
 response = chat([HumanMessage(content="Hello Langchain!")])
 print(response)</code></pre>
                     </div>
-                    
+
                     <div class="output-section">
                         <h3>输出结果：</h3>
                         <div class="output-box">
                             <code>content='Hello! How can I assist you today?' additional_kwargs={} example=False</code>
                         </div>
                     </div>
-                    
-                    <div class="key-advantage">
-                        <strong>关键优势：</strong> 简洁的API，自动处理消息格式
+
+                    <div class="fidelity-pullout-standard" role="region" aria-label="关键优势说明" tabindex="0">
+                        <strong>关键优势：</strong>
+                        <p>简洁的API，自动处理消息格式</p>
                     </div>
                 </div>
             </div>
-            
+
             <div class="slide-footer">
-                <span class="page-number">5</span>
+                <span class="page-number">4</span>
                 <div class="footer-logo">
                     <img src="fidelity-international.svg" alt="Fidelity International" class="logo-svg">
                 </div>
@@ -299,30 +316,62 @@ print(response)</code></pre>
                     <img src="fidelity-international.svg" alt="Fidelity International" class="logo-svg">
                 </div>
             </div>
-            
+
             <h1 class="slide-title">演示 2 - 模型类型对比</h1>
-            
-            <div class="content-layout">
-                <div class="content-left">
+
+            <!-- 横向布局 - 三列设计 -->
+            <div class="horizontal-layout">
+                <!-- 左列：模型概念 + 架构图 -->
+                <div class="column-left">
                     <div class="theme-section">
-                        <h2 class="theme-title">LLM vs 聊天模型</h2>
+                        <h2 class="theme-title">模型概念</h2>
                         <div class="theme-underline orange"></div>
-                        <p class="theme-subtitle">（来自 Demo 02）</p>
+                        <p class="theme-subtitle">Langchain封装的两类模型</p>
+                    </div>
+
+                    <!-- LangChain核心架构图 - Models高亮 -->
+                    <div class="architecture-diagram models-highlight">
+                        <div class="arch-row">
+                            <div class="arch-box highlighted">Models<br><span class="arch-desc">(模型层)</span></div>
+                            <div class="arch-box">Prompts<br><span class="arch-desc">(提示词)</span></div>
+                            <div class="arch-box">Parsers<br><span class="arch-desc">(输出解析)</span></div>
+                        </div>
+                        <div class="arch-arrow-down"></div>
+                        <div class="arch-row">
+                            <div class="arch-box">Memory<br><span class="arch-desc">(记忆组件)</span></div>
+                            <div class="arch-box central">Chains<br><span class="arch-desc">(链条)</span></div>
+                            <div class="arch-box">Agents<br><span class="arch-desc">(智能代理)</span></div>
+                        </div>
+                        <div class="arch-arrow-down"></div>
+                        <div class="arch-row single">
+                            <div class="arch-box wide">Data Connections<br><span
+                                    class="arch-desc">(数据连接层)</span><br><small>Loaders → Splitters → Embeddings →
+                                    Stores</small></div>
+                        </div>
+                        <div class="arch-highlight-note">
+                            <p>💡 当前介绍：<strong>Models 模型层</strong></p>
+                        </div>
                     </div>
                 </div>
-                
-                <div class="content-right">
+
+                <!-- 中列：代码示例 -->
+                <div class="column-center">
                     <div class="code-section">
-                        <h3>LLM - 文本补全模型</h3>
-                        <pre><code>from langchain.llms import OpenAI
+                        <h3>LLM 使用示例</h3>
+                        <pre><code class="language-python">from langchain.llms import OpenAI
+import os
+
+os.environ['OPENAI_API_KEY'] = '您的有效OpenAI API Key'
+
 llm = OpenAI(model_name="text-davinci-003")
 response = llm.predict("What is AI?")
-print(response)</code></pre>
+print(response)
+# 输出: AI (Artificial Intelligence) is a branch of computer science...</code></pre>
                     </div>
-                    
+
                     <div class="code-section">
-                        <h3>Chat Model - 聊天模型（支持角色）</h3>
-                        <pre><code>from langchain.chat_models import ChatOpenAI
+                        <h3>聊天模型使用示例</h3>
+                        <pre><code class="language-python">from langchain.chat_models import ChatOpenAI
 from langchain.schema import HumanMessage, SystemMessage
 
 chat = ChatOpenAI(temperature=0)
@@ -330,25 +379,86 @@ response = chat.predict_messages([
     SystemMessage(content="You are a helpful AI assistant."),
     HumanMessage(content="What is AI?")
 ])
-print(response)</code></pre>
+print(response)
+# 输出: content='AI, or Artificial Intelligence...' additional_kwargs={}</code></pre>
                     </div>
-                    
-                    <div class="key-advantage">
-                        <h3>SystemMessage 的威力：</h3>
-                        <div class="code-section">
-                            <pre><code># 让AI假装不懂AI
-response = chat.predict_messages([
-    SystemMessage(content="You know nothing about AI. Always say 'I don't know'"),
-    HumanMessage(content="What is deep learning?")
-])
-# 输出: "I'm sorry, but I don't know."</code></pre>
-                        </div>
+
+                    <div class="fidelity-pullout-standard" role="region" aria-label="核心差异" tabindex="0">
+                        <strong>核心差异</strong>
+                        <p>LLM适合文本生成，聊天模型支持多轮对话和角色控制，更适合复杂交互场景。</p>
                     </div>
                 </div>
+
+                <!-- 右列：详细分类说明 -->
+                <div class="column-right">
+                    <div id="markdown-content-slide6" class="markdown-content">
+                        <!-- Markdown content will be rendered here -->
+                    </div>
+                    
+                    <!-- Hidden markdown source -->
+                    <script type="text/markdown" id="markdown-source-slide6">
+## 模型简介
+
+Langchain所封装的模型分为两类：
+- **大语言模型 (LLM)**
+- **聊天模型 (Chat Models)**
+
+---
+
+## LLM (大语言模型)
+
+`LLM` 是一种基于统计的机器学习模型，用于对文本数据进行建模和生成。
+
+在Langchain的环境中，LLM特指**文本补全模型**（text completion model）。
+
+| 输入 | 输出 |
+|------|------|
+| 一条文本内容 | 一条文本内容 |
+
+---
+
+## 聊天模型 (Chat Models)
+
+聊天模型是语言模型的一种变体，提供基于**"聊天消息"**的接口。
+
+| 输入 | 输出 |
+|------|------|
+| 一组聊天消息 | 一条聊天消息 |
+
+`聊天消息` 除了消息内容文本，还会包含一些其他参数数据。
+
+---
+
+## OpenAI 模型端点分类
+
+| ENDPOINT | MODEL NAME |
+|----------|------------|
+| `/v1/chat/completions` | gpt-4, gpt-3.5-turbo 等 |
+| `/v1/completions` | text-davinci-003 等 (Legacy) |
+
+---
+
+## 三个消息类
+
+| Langchain类 | OpenAI角色 | 作用 |
+|-------------|------------|------|
+| **AIMessage** | assistant | 模型回答的消息 |
+| **HumanMessage** | user | 用户向模型的请求或提问 |
+| **SystemMessage** | system | 系统指令，用于指定模型的行为 |
+
+---
+
+## 核心差异
+
+- **LLM**：适合文本生成，基于统计的机器学习模型
+- **聊天模型**：支持多轮对话和角色控制，更适合复杂交互场景
+- **统一接口**：Langchain提供 `BaseLanguageModel` 抽象，便于切换模型
+                    </script>
+                </div>
             </div>
-            
+
             <div class="slide-footer">
-                <span class="page-number">6</span>
+                <span class="page-number">5</span>
                 <div class="footer-logo">
                     <img src="fidelity-international.svg" alt="Fidelity International" class="logo-svg">
                 </div>
@@ -362,53 +472,228 @@ response = chat.predict_messages([
                     <img src="fidelity-international.svg" alt="Fidelity International" class="logo-svg">
                 </div>
             </div>
-            
+
             <h1 class="slide-title">演示 3 - 数据连接全流程</h1>
-            
-            <div class="content-layout">
-                <div class="content-left">
+
+            <!-- 横向布局 - 三列设计 -->
+            <div class="horizontal-layout">
+                <!-- 左列：数据连接概念 + 架构图 -->
+                <div class="column-left">
                     <div class="theme-section">
-                        <h2 class="theme-title">从文档到向量搜索</h2>
+                        <h2 class="theme-title">数据连接概念</h2>
                         <div class="theme-underline yellow"></div>
-                        <p class="theme-subtitle">（来自 Demo 03）</p>
+                        <p class="theme-subtitle">连接用户特定数据的完整解决方案</p>
+                    </div>
+
+                    <!-- LangChain核心架构图 - Data Connections高亮 -->
+                    <div class="architecture-diagram data-connections-highlight">
+                        <div class="arch-row">
+                            <div class="arch-box">Models<br><span class="arch-desc">(模型层)</span></div>
+                            <div class="arch-box">Prompts<br><span class="arch-desc">(提示词)</span></div>
+                            <div class="arch-box">Parsers<br><span class="arch-desc">(输出解析)</span></div>
+                        </div>
+                        <div class="arch-arrow-down"></div>
+                        <div class="arch-row">
+                            <div class="arch-box">Memory<br><span class="arch-desc">(记忆组件)</span></div>
+                            <div class="arch-box central">Chains<br><span class="arch-desc">(链条)</span></div>
+                            <div class="arch-box">Agents<br><span class="arch-desc">(智能代理)</span></div>
+                        </div>
+                        <div class="arch-arrow-down"></div>
+                        <div class="arch-row single">
+                            <div class="arch-box wide highlighted">Data Connections<br><span
+                                    class="arch-desc">(数据连接层)</span><br><small>Loaders → Splitters → Embeddings →
+                                    Stores</small></div>
+                        </div>
+                        <div class="arch-highlight-note">
+                            <p>💡 当前介绍：<strong>Data Connections 数据连接层</strong></p>
+                        </div>
                     </div>
                 </div>
-                
-                <div class="content-right">
+
+                <!-- 中列：代码示例 -->
+                <div class="column-center">
                     <div class="code-section">
-                        <pre><code># 1. 文档加载 - 支持多种格式
+                        <h3>文档加载示例（来自Notebook）</h3>
+                        <pre><code class="language-python"># 安装依赖
+!pip install -q langchain openai
+
+# 加载文档
 from langchain.document_loaders import TextLoader
+
 loader = TextLoader("./README.md")
 docs = loader.load()
 
-# 2. 智能文档分割
-from langchain.text_splitter import RecursiveCharacterTextSplitter
-text_splitter = RecursiveCharacterTextSplitter(
-    chunk_size=1000, 
-    chunk_overlap=200
-)
-split_docs = text_splitter.split_documents(docs)
-
-# 3. 向量化与存储
-from langchain.embeddings.openai import OpenAIEmbeddings
-from langchain.vectorstores import Chroma
-embeddings = OpenAIEmbeddings()
-vectorstore = Chroma.from_documents(split_docs, embeddings)
-
-# 4. 相似性搜索
-query = "什么是WTF Langchain？"
-similar_docs = vectorstore.similarity_search(query)
-print(similar_docs[0].page_content)</code></pre>
+# 查看加载结果
+print(f"文档数量: {len(docs)}")
+print(f"文档长度: {len(docs[0].page_content)}")
+# 输出: 文档数量: 1, 文档长度: 2845</code></pre>
                     </div>
-                    
-                    <div class="key-advantage">
-                        <strong>一条龙服务：</strong> 加载→分割→嵌入→存储→检索
+
+                    <div class="code-section">
+                        <h3>文档拆分示例</h3>
+                        <pre><code class="language-python">from langchain.text_splitter import CharacterTextSplitter
+
+text_splitter = CharacterTextSplitter(
+    separator = "\n\n",
+    chunk_size = 1000,
+    chunk_overlap = 200,
+    length_function = len,
+)
+
+split_docs = text_splitter.split_documents(docs)
+print(f"原文档长度: {len(docs[0].page_content)}")
+for i, split_doc in enumerate(split_docs):
+    print(f"分块{i+1}长度: {len(split_doc.page_content)}")
+# 输出: 原文档长度: 2845
+# 分块1长度: 1000, 分块2长度: 800, ...</code></pre>
+                    </div>
+
+                    <div class="code-section">
+                        <h3>向量存储与检索（完整流程）</h3>
+                        <pre><code class="language-python"># 安装向量数据库
+!pip install -q chromadb
+
+# 完整数据连接流程（来自Notebook）
+from langchain.document_loaders import TextLoader
+from langchain.embeddings.openai import OpenAIEmbeddings
+from langchain.text_splitter import CharacterTextSplitter
+from langchain.vectorstores import Chroma
+
+# 1. 文档分割
+text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
+documents = text_splitter.split_documents(docs)
+
+# 2. 创建向量数据库
+db = Chroma.from_documents(documents, OpenAIEmbeddings(openai_api_key=""))
+
+# 3. 相似性检索
+query = "什么是Langchain？"
+results = db.similarity_search(query)
+print(f"找到 {len(results)} 个相关文档块")
+
+# 4. 带分数的检索
+results_with_score = db.similarity_search_with_score(query)
+print(f"最相关文档分数: {results_with_score[0][1]:.3f}")
+</code></pre>
+                    </div>
+
+                    <div class="fidelity-pullout-standard" role="region" aria-label="实战要点" tabindex="0">
+                        <strong>实战要点</strong>
+                        <p>通过chunk_size和chunk_overlap参数控制文档分割，平衡检索精度和上下文完整性。</p>
                     </div>
                 </div>
+
+                <!-- 右列：详细流程说明 -->
+                <div class="column-right">
+                    <div id="markdown-content-slide7" class="markdown-content">
+                        <!-- Markdown content will be rendered here -->
+                    </div>
+                    
+                    <!-- Hidden markdown source -->
+                    <script type="text/markdown" id="markdown-source-slide7">
+## 什么是数据连接？
+
+LLM应用往往需要用户特定的数据，而这些数据并不属于模型的训练集。
+
+LangChain的数据连接概念，通过提供以下组件，实现用户数据的加载、转换、存储和查询：
+
+- **文档加载器**: 从不同的数据源加载文档
+- **文档转换器**: 拆分文档，转换格式，去除冗余
+- **文本嵌入模型**: 将文本转换为向量表示
+- **向量存储**: 存储和搜索嵌入数据
+- **检索器**: 提供数据查询的通用接口
+
+---
+
+## 实战代码详解
+
+### 递归字符拆分（推荐方式）
+```python
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+
+text_splitter = RecursiveCharacterTextSplitter(
+    chunk_size = 100,
+    chunk_overlap = 20,
+    length_function = len,
+)
+texts = text_splitter.split_documents(docs)
+```
+
+### 按Token拆分
+```python
+from langchain.text_splitter import CharacterTextSplitter
+
+text_splitter = CharacterTextSplitter.from_tiktoken_encoder(
+    chunk_size=100, chunk_overlap=0
+)
+split_docs = text_splitter.split_documents(docs)
+```
+
+### 向量化实例
+```python
+from langchain.embeddings import OpenAIEmbeddings
+
+embeddings_model = OpenAIEmbeddings(openai_api_key="你的API密钥")
+embeddings = embeddings_model.embed_documents([
+    "你好!",
+    "Langchain!",
+    "你真棒！"
+])
+# 返回: [[0.001767348..., -0.016549955..., ...], [...]]
+```
+
+### 向量数据库创建（来自Notebook）
+```python
+from langchain.document_loaders import TextLoader
+from langchain.embeddings.openai import OpenAIEmbeddings
+from langchain.text_splitter import CharacterTextSplitter
+from langchain.vectorstores import Chroma
+
+# 完整流程
+text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
+documents = text_splitter.split_documents(docs)
+db = Chroma.from_documents(documents, OpenAIEmbeddings(openai_api_key=""))
+```
+
+### 带分数的相似性检索
+```python
+query = "什么是Langchain？"
+# 普通检索
+results = db.similarity_search(query)
+
+# 带分数检索
+results_with_score = db.similarity_search_with_score(query)
+# 返回: [(Document(...), 0.789), (Document(...), 0.456)]
+# 分数越低，相似性越高
+```
+
+---
+
+## 支持的文档加载器
+
+| 加载器类型 | 使用场景 | 代码示例 |
+|----------|---------|---------|
+| **TextLoader** | 纯文本文件 | `TextLoader("file.txt")` |
+| **PyPDFLoader** | PDF文档 | `PyPDFLoader("doc.pdf")` |
+| **CSVLoader** | CSV数据 | `CSVLoader("data.csv")` |
+| **DirectoryLoader** | 批量加载 | `DirectoryLoader("./docs/")` |
+
+---
+
+<!-- ## 性能优化建议
+
+1. **合理设置chunk_size**: 通常1000-2000字符
+2. **适当设置chunk_overlap**: 10-20%的重叠
+3. **选择合适的分割器**: 根据文档类型选择
+4. **向量数据库选择**: 开发用Chroma，生产用Pinecone
+
+相似性通过**欧几里得距离**计算：`d = √(Σ(ai-bi)²)` -->
+                    </script>
+                </div>
             </div>
-            
+
             <div class="slide-footer">
-                <span class="page-number">7</span>
+                <span class="page-number">6</span>
                 <div class="footer-logo">
                     <img src="fidelity-international.svg" alt="Fidelity International" class="logo-svg">
                 </div>
@@ -422,32 +707,64 @@ print(similar_docs[0].page_content)</code></pre>
                     <img src="fidelity-international.svg" alt="Fidelity International" class="logo-svg">
                 </div>
             </div>
-            
+
             <h1 class="slide-title">演示 4 - 提示词模板与动态选择</h1>
-            
-            <div class="content-layout">
-                <div class="content-left">
+
+            <!-- 横向布局 - 三列设计 -->
+            <div class="horizontal-layout">
+                <!-- 左列：提示词概念 + 架构图 -->
+                <div class="column-left">
                     <div class="theme-section">
-                        <h2 class="theme-title">参数化提示词</h2>
+                        <h2 class="theme-title">提示词模板</h2>
                         <div class="theme-underline green"></div>
-                        <p class="theme-subtitle">（来自 Demo 04）</p>
+                        <p class="theme-subtitle">参数化提示词构建</p>
+                    </div>
+
+                    <!-- LangChain核心架构图 - Prompts高亮 -->
+                    <div class="architecture-diagram prompts-highlight">
+                        <div class="arch-row">
+                            <div class="arch-box">Models<br><span class="arch-desc">(模型层)</span></div>
+                            <div class="arch-box highlighted">Prompts<br><span class="arch-desc">(提示词)</span></div>
+                            <div class="arch-box">Parsers<br><span class="arch-desc">(输出解析)</span></div>
+                        </div>
+                        <div class="arch-arrow-down"></div>
+                        <div class="arch-row">
+                            <div class="arch-box">Memory<br><span class="arch-desc">(记忆组件)</span></div>
+                            <div class="arch-box central">Chains<br><span class="arch-desc">(链条)</span></div>
+                            <div class="arch-box">Agents<br><span class="arch-desc">(智能代理)</span></div>
+                        </div>
+                        <div class="arch-arrow-down"></div>
+                        <div class="arch-row single">
+                            <div class="arch-box wide">Data Connections<br><span
+                                    class="arch-desc">(数据连接层)</span><br><small>Loaders → Splitters → Embeddings →
+                                    Stores</small></div>
+                        </div>
+                        <div class="arch-highlight-note">
+                            <p>💡 当前介绍：<strong>Prompts 提示词层</strong></p>
+                        </div>
                     </div>
                 </div>
-                
-                <div class="content-right">
+
+                <!-- 中列：代码示例 -->
+                <div class="column-center">
                     <div class="code-section">
                         <h3>基础提示词模板</h3>
-                        <pre><code>from langchain import PromptTemplate
+                        <pre><code class="language-python">from langchain import PromptTemplate
+
 template = """
-你精通多种语言，是专业的翻译官。你负责{src_lang}到{dst_lang}的翻译工作。
+你精通多种语言，是专业的翻译官。
+你负责{src_lang}到{dst_lang}的翻译工作。
 """
+
 prompt = PromptTemplate.from_template(template)
-result = prompt.format(src_lang="英文", dst_lang="中文")</code></pre>
+result = prompt.format(src_lang="英文", dst_lang="中文")
+print(result)
+# 输出: 你精通多种语言，是专业的翻译官。你负责英文到中文的翻译工作。</code></pre>
                     </div>
-                    
+
                     <div class="code-section">
-                        <h3>聊天提示词模板 - 多角色</h3>
-                        <pre><code>from langchain.prompts import ChatPromptTemplate, SystemMessagePromptTemplate, HumanMessagePromptTemplate
+                        <h3>聊天提示词模板</h3>
+                        <pre><code class="language-python">from langchain.prompts import ChatPromptTemplate, SystemMessagePromptTemplate, HumanMessagePromptTemplate
 
 system_template = "You are a professional translator that translates {src_lang} to {dst_lang}."
 system_prompt = SystemMessagePromptTemplate.from_template(system_template)
@@ -457,24 +774,92 @@ chat_prompt = ChatPromptTemplate.from_messages([system_prompt, human_prompt])
 messages = chat_prompt.format_prompt(
     src_lang="English", dst_lang="Chinese", 
     user_input="Did you eat in this morning?"
-).to_messages()</code></pre>
+).to_messages()
+print(messages)</code></pre>
                     </div>
-                    
-                    <div class="key-advantage">
-                        <h3>动态示例选择器：</h3>
-                        <pre><code># Few-shot 学习，根据输入长度自动选择示例数量
-from langchain.prompts.example_selector import LengthBasedExampleSelector
+
+                    <div class="code-section">
+                        <h3>动态示例选择器</h3>
+                        <pre><code class="language-python">from langchain.prompts.example_selector import LengthBasedExampleSelector
+
 examples = [
     {"input": "happy", "output": "sad"},
-    {"input": "tall", "output": "short"}
+    {"input": "tall", "output": "short"},
+    {"input": "energetic", "output": "lethargic"}
 ]
-# 自动根据token预算选择合适的示例数量</code></pre>
+
+example_selector = LengthBasedExampleSelector(
+    examples=examples,
+    example_prompt=example_prompt,
+    max_length=25,
+)
+
+# 根据输入长度自动选择合适的示例数量</code></pre>
+                    </div>
+
+                    <div class="fidelity-pullout-standard" role="region" aria-label="关键优势" tabindex="0">
+                        <strong>关键优势</strong>
+                        <p>提示词模板支持参数化和动态组合，提高提示词的复用性和灵活性。</p>
                     </div>
                 </div>
+
+                <!-- 右列：详细说明 -->
+                <div class="column-right">
+                    <div id="markdown-content-slide8" class="markdown-content">
+                        <!-- Markdown content will be rendered here -->
+                    </div>
+                    
+                    <!-- Hidden markdown source -->
+                    <script type="text/markdown" id="markdown-source-slide8">
+## 提示词模板概述
+
+提示词模板是LangChain中用于构建可重用、参数化提示词的核心组件。
+
+### 核心功能
+- **参数化**: 使用占位符实现动态内容填充
+- **类型安全**: 支持类型检查和验证
+- **组合性**: 支持复杂的多消息模板
+- **动态选择**: 根据条件自动选择最佳示例
+
+---
+
+## 模板类型
+
+### 1. PromptTemplate
+基础字符串模板，适用于简单的文本替换。
+
+### 2. ChatPromptTemplate
+多消息模板，支持系统消息、用户消息等不同角色。
+
+### 3. FewShotPromptTemplate
+少样本学习模板，包含示例和选择器。
+
+---
+
+## 示例选择器类型
+
+| 选择器类型 | 适用场景 | 特点 |
+|----------|---------|------|
+| **LengthBasedExampleSelector** | 控制token数量 | 根据长度限制选择示例 |
+| **SemanticSimilarityExampleSelector** | 语义相关性 | 基于相似度选择示例 |
+| **MaxMarginalRelevanceExampleSelector** | 多样性平衡 | 平衡相关性和多样性 |
+
+---
+
+## 最佳实践
+
+1. **模板设计**: 使用清晰的占位符命名
+2. **参数验证**: 利用Pydantic进行类型检查
+3. **示例质量**: 提供高质量、多样化的示例
+4. **性能优化**: 合理控制示例数量和长度
+
+模板化提示词是构建稳定AI应用的基础。
+                    </script>
+                </div>
             </div>
-            
+
             <div class="slide-footer">
-                <span class="page-number">8</span>
+                <span class="page-number">7</span>
                 <div class="footer-logo">
                     <img src="fidelity-international.svg" alt="Fidelity International" class="logo-svg">
                 </div>
@@ -488,21 +873,49 @@ examples = [
                     <img src="fidelity-international.svg" alt="Fidelity International" class="logo-svg">
                 </div>
             </div>
-            
+
             <h1 class="slide-title">演示 5 - 结构化输出解析</h1>
-            
-            <div class="content-layout">
-                <div class="content-left">
+
+            <!-- 横向布局 - 三列设计 -->
+            <div class="horizontal-layout">
+                <!-- 左列：输出解析概念 + 架构图 -->
+                <div class="column-left">
                     <div class="theme-section">
-                        <h2 class="theme-title">让AI返回JSON格式</h2>
+                        <h2 class="theme-title">输出解析</h2>
                         <div class="theme-underline purple"></div>
-                        <p class="theme-subtitle">（来自 Demo 05）</p>
+                        <p class="theme-subtitle">结构化AI输出处理</p>
+                    </div>
+
+                    <!-- LangChain核心架构图 - Parsers高亮 -->
+                    <div class="architecture-diagram parsers-highlight">
+                        <div class="arch-row">
+                            <div class="arch-box">Models<br><span class="arch-desc">(模型层)</span></div>
+                            <div class="arch-box">Prompts<br><span class="arch-desc">(提示词)</span></div>
+                            <div class="arch-box highlighted">Parsers<br><span class="arch-desc">(输出解析)</span></div>
+                        </div>
+                        <div class="arch-arrow-down"></div>
+                        <div class="arch-row">
+                            <div class="arch-box">Memory<br><span class="arch-desc">(记忆组件)</span></div>
+                            <div class="arch-box central">Chains<br><span class="arch-desc">(链条)</span></div>
+                            <div class="arch-box">Agents<br><span class="arch-desc">(智能代理)</span></div>
+                        </div>
+                        <div class="arch-arrow-down"></div>
+                        <div class="arch-row single">
+                            <div class="arch-box wide">Data Connections<br><span
+                                    class="arch-desc">(数据连接层)</span><br><small>Loaders → Splitters → Embeddings →
+                                    Stores</small></div>
+                        </div>
+                        <div class="arch-highlight-note">
+                            <p>💡 当前介绍：<strong>Parsers 输出解析层</strong></p>
+                        </div>
                     </div>
                 </div>
-                
-                <div class="content-right">
+
+                <!-- 中列：代码示例 -->
+                <div class="column-center">
                     <div class="code-section">
-                        <pre><code>from langchain.output_parsers import StructuredOutputParser, ResponseSchema
+                        <h3>结构化输出解析器</h3>
+                        <pre><code class="language-python">from langchain.output_parsers import StructuredOutputParser, ResponseSchema
 from langchain.prompts import PromptTemplate
 from langchain.llms import OpenAI
 
@@ -515,8 +928,13 @@ parser = StructuredOutputParser.from_response_schemas(response_schemas)
 
 # 获取格式化指令
 format_instructions = parser.get_format_instructions()
+print(format_instructions)
+# 输出: The output should be a markdown code snippet formatted in the following schema:</code></pre>
+                    </div>
 
-# 创建提示词模板
+                    <div class="code-section">
+                        <h3>完整解析流程</h3>
+                        <pre><code class="language-python"># 创建提示词模板
 prompt = PromptTemplate(
     template="answer the question.\n{format_instructions}\n{question}",
     input_variables=["question"],
@@ -528,21 +946,99 @@ model = OpenAI(temperature=0)
 response = prompt.format_prompt(question="Who is the CEO of Tesla?")
 output = model(response.to_string())
 parsed_result = parser.parse(output)
-# 结果: {'answer': 'Elon Musk', 'source': 'https://...'}</code></pre>
+
+print(parsed_result)
+# 结果: {'answer': 'Elon Musk', 'source': 'https://tesla.com'}</code></pre>
                     </div>
-                    
-                    <div class="key-advantage">
-                        <h3>自定义解析器示例：</h3>
-                        <pre><code># 扩展内置解析器，返回排序后的列表
-class SortedCommaSeparatedListOutputParser(CommaSeparatedListOutputParser):
-    def parse(self, text: str) -> List[str]:
-        return sorted(super().parse(text))</code></pre>
+
+                    <div class="code-section">
+                        <h3>Pydantic解析器</h3>
+                        <pre><code class="language-python">from langchain.output_parsers import PydanticOutputParser
+from pydantic import BaseModel, Field
+
+class Person(BaseModel):
+    name: str = Field(description="person's name")
+    age: int = Field(description="person's age")
+    occupation: str = Field(description="person's occupation")
+
+parser = PydanticOutputParser(pydantic_object=Person)
+format_instructions = parser.get_format_instructions()
+
+# 自动验证和类型转换</code></pre>
+                    </div>
+
+                    <div class="fidelity-pullout-standard" role="region" aria-label="关键优势" tabindex="0">
+                        <strong>关键优势</strong>
+                        <p>输出解析器确保AI返回的数据格式一致且可预测，提高应用的稳定性。</p>
                     </div>
                 </div>
+
+                <!-- 右列：详细说明 -->
+                <div class="column-right">
+                    <div id="markdown-content-slide9" class="markdown-content">
+                        <!-- Markdown content will be rendered here -->
+                    </div>
+                    
+                    <!-- Hidden markdown source -->
+                    <script type="text/markdown" id="markdown-source-slide9">
+## 输出解析器概述
+
+输出解析器将语言模型的文本输出转换为结构化数据，是构建可靠AI应用的关键组件。
+
+### 核心功能
+- **格式标准化**: 确保输出格式一致
+- **类型验证**: 自动验证和转换数据类型
+- **错误处理**: 处理格式不正确的输出
+- **指令生成**: 自动生成格式化指令
+
+---
+
+## 解析器类型
+
+### 1. StructuredOutputParser
+基于JSON Schema的通用结构化解析器，适用于复杂的嵌套数据结构。
+
+### 2. PydanticOutputParser
+基于Pydantic模型的类型安全解析器，提供强类型检查。
+
+### 3. CommaSeparatedListOutputParser
+简单的列表解析器，将逗号分隔的文本转换为列表。
+
+### 4. DatetimeOutputParser
+专门用于解析日期时间格式的解析器。
+
+---
+
+## 自定义解析器
+
+```python
+from langchain.output_parsers import BaseOutputParser
+
+class CustomParser(BaseOutputParser):
+    def parse(self, text: str):
+        # 实现自定义解析逻辑
+        return {"custom": text.strip()}
+    
+    def get_format_instructions(self) -> str:
+        return "Please format your response as..."
+```
+
+---
+
+## 最佳实践
+
+1. **明确Schema**: 定义清晰的数据结构
+2. **错误处理**: 处理解析失败的情况
+3. **类型安全**: 使用Pydantic进行类型检查
+4. **指令优化**: 提供清晰的格式化指令
+
+结构化输出是AI应用与业务系统集成的桥梁。
+                    </script>
+                </div>
             </div>
-            
+
             <div class="slide-footer">
-                <span class="page-number">9</span>
+                <span class="page-number">8</span>
                 <div class="footer-logo">
                     <img src="fidelity-international.svg" alt="Fidelity International" class="logo-svg">
                 </div>
@@ -556,22 +1052,49 @@ class SortedCommaSeparatedListOutputParser(CommaSeparatedListOutputParser):
                     <img src="fidelity-international.svg" alt="Fidelity International" class="logo-svg">
                 </div>
             </div>
-            
+
             <h1 class="slide-title">演示 6 - 链式调用与数学推理</h1>
-            
-            <div class="content-layout">
-                <div class="content-left">
+
+            <!-- 横向布局 - 三列设计 -->
+            <div class="horizontal-layout">
+                <!-- 左列：链式调用概念 + 架构图 -->
+                <div class="column-left">
                     <div class="theme-section">
-                        <h2 class="theme-title">LLMChain 与 LangChainHub</h2>
+                        <h2 class="theme-title">链式调用</h2>
                         <div class="theme-underline teal"></div>
-                        <p class="theme-subtitle">（来自 Demo 06）</p>
+                        <p class="theme-subtitle">组合式AI流程构建</p>
+                    </div>
+
+                    <!-- LangChain核心架构图 - Chains高亮 -->
+                    <div class="architecture-diagram chains-highlight">
+                        <div class="arch-row">
+                            <div class="arch-box">Models<br><span class="arch-desc">(模型层)</span></div>
+                            <div class="arch-box">Prompts<br><span class="arch-desc">(提示词)</span></div>
+                            <div class="arch-box">Parsers<br><span class="arch-desc">(输出解析)</span></div>
+                        </div>
+                        <div class="arch-arrow-down"></div>
+                        <div class="arch-row">
+                            <div class="arch-box">Memory<br><span class="arch-desc">(记忆组件)</span></div>
+                            <div class="arch-box central highlighted">Chains<br><span class="arch-desc">(链条)</span></div>
+                            <div class="arch-box">Agents<br><span class="arch-desc">(智能代理)</span></div>
+                        </div>
+                        <div class="arch-arrow-down"></div>
+                        <div class="arch-row single">
+                            <div class="arch-box wide">Data Connections<br><span
+                                    class="arch-desc">(数据连接层)</span><br><small>Loaders → Splitters → Embeddings →
+                                    Stores</small></div>
+                        </div>
+                        <div class="arch-highlight-note">
+                            <p>💡 当前介绍：<strong>Chains 链式组合</strong></p>
+                        </div>
                     </div>
                 </div>
-                
-                <div class="content-right">
+
+                <!-- 中列：代码示例 -->
+                <div class="column-center">
                     <div class="code-section">
-                        <h3>基础链：LLM + 提示词模板</h3>
-                        <pre><code>from langchain.llms import OpenAI
+                        <h3>基础LLMChain</h3>
+                        <pre><code class="language-python">from langchain.llms import OpenAI
 from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
 
@@ -587,28 +1110,136 @@ print(chain.run("green"))   # #00FF00
 print(chain.run("cyan"))    # #00FFFF
 print(chain.run("magento")) # #E13939</code></pre>
                     </div>
-                    
+
                     <div class="code-section">
-                        <h3>从社区加载现成的链：</h3>
-                        <pre><code># 加载数学计算链
-from langchain.chains import load_chain
-chain = load_chain("lc://chains/llm-math/chain.json")
-result = chain.run("whats the area of a circle with radius 2?")
+                        <h3>数学推理链</h3>
+                        <pre><code class="language-python">from langchain.chains import LLMMathChain
+
+llm = OpenAI(temperature=0)
+math_chain = LLMMathChain.from_llm(llm, verbose=True)
+
+# 复杂数学计算
+result = math_chain.run("What is the area of a circle with radius 2?")
 
 # 输出过程：
 # > Entering new LLMMathChain chain...
-# Answer: 12.566370614359172
+# I need to calculate the area of a circle with radius 2.
+# Action: Calculator
+# Action Input: 3.14159 * 2**2
+# Observation: 12.56636
+# Answer: 12.56636
 # > Finished chain.</code></pre>
                     </div>
-                    
-                    <div class="key-advantage">
-                        <strong>优势：</strong> 社区共享，开箱即用
+
+                    <div class="code-section">
+                        <h3>顺序链组合</h3>
+                        <pre><code class="language-python">from langchain.chains import SequentialChain
+
+# 第一个链：生成故事大纲
+synopsis_chain = LLMChain(llm=llm, prompt=synopsis_prompt, output_key="synopsis")
+
+# 第二个链：生成完整故事
+story_chain = LLMChain(llm=llm, prompt=story_prompt, output_key="story")
+
+# 组合链
+overall_chain = SequentialChain(
+    chains=[synopsis_chain, story_chain],
+    input_variables=["era", "topic"],
+    output_variables=["synopsis", "story"]
+)
+
+result = overall_chain({"era": "现代", "topic": "AI"})
+</code></pre>
+                    </div>
+
+                    <div class="fidelity-pullout-standard" role="region" aria-label="关键优势" tabindex="0">
+                        <strong>关键优势</strong>
+                        <p>链式调用允许将复杂任务分解为多个步骤，提高推理能力和结果质量。</p>
                     </div>
                 </div>
+
+                <!-- 右列：详细说明 -->
+                <div class="column-right">
+                    <div id="markdown-content-slide10" class="markdown-content">
+                        <!-- Markdown content will be rendered here -->
+                    </div>
+                    
+                    <!-- Hidden markdown source -->
+                    <script type="text/markdown" id="markdown-source-slide10">
+## 链式调用概述
+
+链式调用是LangChain的核心概念，允许将多个组件组合成复杂的AI工作流。
+
+### 核心优势
+- **模块化**: 将复杂任务分解为简单步骤
+- **可重用**: 链可以在不同场景中复用
+- **可组合**: 支持链的嵌套和并行组合
+- **可观测**: 提供详细的执行日志
+
+---
+
+## 链的类型
+
+### 1. LLMChain
+最基础的链，组合LLM和提示词模板。
+
+### 2. SequentialChain
+顺序执行多个链，上一个链的输出作为下一个链的输入。
+
+### 3. RouterChain
+根据输入内容路由到不同的处理链。
+
+### 4. TransformChain
+对输入进行预处理的专用链。
+
+---
+
+## 专业链
+
+| 链类型 | 功能 | 适用场景 |
+|-------|------|---------|
+| **LLMMathChain** | 数学计算 | 数值推理和计算 |
+| **LLMSummarizationChain** | 文本摘要 | 长文档处理 |
+| **LLMCheckerChain** | 事实检查 | 输出验证 |
+| **APIChain** | API调用 | 外部服务集成 |
+
+---
+
+## 高级组合模式
+
+### 并行链
+```python
+from langchain.chains import SimpleSequentialChain
+
+chain = SimpleSequentialChain(chains=[chain1, chain2])
+```
+
+### 条件链
+```python
+from langchain.chains.router import MultiRouteChain
+
+router_chain = MultiRouteChain(
+    router=router,
+    destination_chains=destination_chains
+)
+```
+
+---
+
+## 最佳实践
+
+1. **任务分解**: 将复杂任务分解为清晰的步骤
+2. **错误处理**: 在每个环节添加错误检查
+3. **性能优化**: 合理使用缓存和并行处理
+4. **可观测性**: 启用verbose模式进行调试
+
+链式组合是构建企业级AI应用的基础架构。
+                    </script>
+                </div>
             </div>
-            
+
             <div class="slide-footer">
-                <span class="page-number">10</span>
+                <span class="page-number">9</span>
                 <div class="footer-logo">
                     <img src="fidelity-international.svg" alt="Fidelity International" class="logo-svg">
                 </div>
@@ -622,51 +1253,199 @@ result = chain.run("whats the area of a circle with radius 2?")
                     <img src="fidelity-international.svg" alt="Fidelity International" class="logo-svg">
                 </div>
             </div>
-            
+
             <h1 class="slide-title">演示 7 - 对话记忆管理</h1>
-            
-            <div class="content-layout">
-                <div class="content-left">
+
+            <!-- 横向布局 - 三列设计 -->
+            <div class="horizontal-layout">
+                <!-- 左列：记忆管理概念 + 架构图 -->
+                <div class="column-left">
                     <div class="theme-section">
-                        <h2 class="theme-title">让AI记住之前的对话</h2>
+                        <h2 class="theme-title">对话记忆</h2>
                         <div class="theme-underline blue"></div>
-                        <p class="theme-subtitle">（来自 Demo 07）</p>
+                        <p class="theme-subtitle">上下文感知的AI对话</p>
+                    </div>
+
+                    <!-- LangChain核心架构图 - Memory高亮 -->
+                    <div class="architecture-diagram memory-highlight">
+                        <div class="arch-row">
+                            <div class="arch-box">Models<br><span class="arch-desc">(模型层)</span></div>
+                            <div class="arch-box">Prompts<br><span class="arch-desc">(提示词)</span></div>
+                            <div class="arch-box">Parsers<br><span class="arch-desc">(输出解析)</span></div>
+                        </div>
+                        <div class="arch-arrow-down"></div>
+                        <div class="arch-row">
+                            <div class="arch-box highlighted">Memory<br><span class="arch-desc">(记忆组件)</span></div>
+                            <div class="arch-box central">Chains<br><span class="arch-desc">(链条)</span></div>
+                            <div class="arch-box">Agents<br><span class="arch-desc">(智能代理)</span></div>
+                        </div>
+                        <div class="arch-arrow-down"></div>
+                        <div class="arch-row single">
+                            <div class="arch-box wide">Data Connections<br><span
+                                    class="arch-desc">(数据连接层)</span><br><small>Loaders → Splitters → Embeddings →
+                                    Stores</small></div>
+                        </div>
+                        <div class="arch-highlight-note">
+                            <p>💡 当前介绍：<strong>Memory 记忆管理</strong></p>
+                        </div>
                     </div>
                 </div>
-                
-                <div class="content-right">
+
+                <!-- 中列：代码示例 -->
+                <div class="column-center">
                     <div class="code-section">
-                        <h3>Buffer记忆 - 保存所有历史</h3>
-                        <pre><code>from langchain.memory import ConversationBufferMemory
+                        <h3>缓冲记忆（Buffer Memory）</h3>
+                        <pre><code class="language-python">from langchain.memory import ConversationBufferMemory
+
 memory = ConversationBufferMemory()
 memory.save_context({"input": "Hi, LangChain!"}, {"output": "Hey!"})
 memory.save_context({"input": "Where are you?"}, {"output": "By your side"})
+
 print(memory.load_memory_variables({}))
-# 输出: {'history': 'Human: Hi, LangChain!\nAI: Hey!\nHuman: Where are you?\nAI: By your side'}</code></pre>
+# 输出: {'history': 'Human: Hi, LangChain!\nAI: Hey!\nHuman: Where are you?\nAI: By your side'}
+
+# 查看消息格式
+print(memory.chat_memory.messages)
+# [HumanMessage(content='Hi, LangChain!'), AIMessage(content='Hey!'), ...]</code></pre>
                     </div>
-                    
+
                     <div class="code-section">
-                        <h3>Window记忆 - 只保留最近K轮对话</h3>
-                        <pre><code>from langchain.memory import ConversationBufferWindowMemory
-memory = ConversationBufferWindowMemory(k=1)  # 只记住最近1轮
-memory.save_context({"input": "Hi, LangChain!"}, {"output": "Hey!"})
-memory.save_context({"input": "Where are you?"}, {"output": "By your side"})
+                        <h3>窗口记忆（Window Memory）</h3>
+                        <pre><code class="language-python">from langchain.memory import ConversationBufferWindowMemory
+
+# 只保留最近K轮对话
+memory = ConversationBufferWindowMemory(k=2)
+memory.save_context({"input": "第一个问题"}, {"output": "第一个回答"})
+memory.save_context({"input": "第二个问题"}, {"output": "第二个回答"})
+memory.save_context({"input": "第三个问题"}, {"output": "第三个回答"})
+
 print(memory.load_memory_variables({}))
-# 输出: {'history': 'Human: Where are you?\nAI: By your side'}  # 只保留最近的</code></pre>
+# 输出: 只包含最近2轮对话
+# {'history': 'Human: 第二个问题\nAI: 第二个回答\nHuman: 第三个问题\nAI: 第三个回答'}</code></pre>
                     </div>
-                    
-                    <div class="key-advantage">
-                        <h3>实际应用 - 带记忆的聊天：</h3>
-                        <pre><code>from langchain.chains import ConversationChain
-conversation = ConversationChain(llm=llm, memory=memory, verbose=True)
-conversation.predict(input="Where is Paris?")
-conversation.predict(input="What did I just ask?")  # AI能记住上一个问题</code></pre>
+
+                    <div class="code-section">
+                        <h3>带记忆的对话链</h3>
+                        <pre><code class="language-python">from langchain.chains import ConversationChain
+from langchain.llms import OpenAI
+
+llm = OpenAI(temperature=0)
+conversation = ConversationChain(
+    llm=llm, 
+    memory=ConversationBufferMemory(),
+    verbose=True
+)
+
+# 第一轮对话
+response1 = conversation.predict(input="我叫张三，来自北京")
+print(response1)
+
+# 第二轮对话 - AI能记住之前的信息
+response2 = conversation.predict(input="我刚才说我叫什么名字？")
+print(response2)  # AI会回答：你叫张三
+</code></pre>
+                    </div>
+
+                    <div class="fidelity-pullout-standard" role="region" aria-label="关键优势" tabindex="0">
+                        <strong>关键优势</strong>
+                        <p>记忆管理使AI能够维持连贯的多轮对话，提供个性化的交互体验。</p>
                     </div>
                 </div>
+
+                <!-- 右列：详细说明 -->
+                <div class="column-right">
+                    <div id="markdown-content-slide11" class="markdown-content">
+                        <!-- Markdown content will be rendered here -->
+                    </div>
+                    
+                    <!-- Hidden markdown source -->
+                    <script type="text/markdown" id="markdown-source-slide11">
+## 对话记忆概述
+
+对话记忆是LangChain中用于维持上下文连贯性的核心组件，使AI能够记住历史对话内容。
+
+### 核心功能
+- **上下文保持**: 维持多轮对话的连贯性
+- **个性化**: 记住用户偏好和历史信息
+- **状态管理**: 跟踪对话状态和进展
+- **智能遗忘**: 根据策略选择性保留信息
+
+---
+
+## 记忆类型
+
+### 1. ConversationBufferMemory
+保存完整的对话历史，适用于短会话。
+
+### 2. ConversationBufferWindowMemory
+只保留最近K轮对话，控制内存使用。
+
+### 3. ConversationSummaryMemory
+对历史对话进行摘要，节省token。
+
+### 4. ConversationSummaryBufferMemory
+结合摘要和缓冲，平衡上下文和效率。
+
+---
+
+## 高级记忆类型
+
+| 记忆类型 | 特点 | 适用场景 |
+|---------|------|---------|
+| **ConversationTokenBufferMemory** | 基于token数量限制 | Token敏感的应用 |
+| **ConversationKGMemory** | 基于知识图谱 | 复杂关系记忆 |
+| **VectorStoreRetrieverMemory** | 向量检索记忆 | 长期记忆管理 |
+
+---
+
+## 记忆配置示例
+
+### Token缓冲记忆
+```python
+from langchain.memory import ConversationTokenBufferMemory
+
+memory = ConversationTokenBufferMemory(
+    llm=llm,
+    max_token_limit=1000
+)
+```
+
+### 摘要记忆
+```python
+from langchain.memory import ConversationSummaryMemory
+
+memory = ConversationSummaryMemory(
+    llm=llm,
+    return_messages=True
+)
+```
+
+### 向量存储记忆
+```python
+from langchain.memory import VectorStoreRetrieverMemory
+
+memory = VectorStoreRetrieverMemory(
+    retriever=vector_store.as_retriever(),
+    memory_key="history"
+)
+```
+
+---
+
+## 最佳实践
+
+1. **选择合适的记忆类型**: 根据应用场景选择
+2. **控制记忆大小**: 避免token超限
+3. **定期清理**: 实现记忆重置机制
+4. **个性化配置**: 根据用户需求调整记忆策略
+
+记忆管理是构建智能对话系统的关键技术。
+                    </script>
+                </div>
             </div>
-            
+
             <div class="slide-footer">
-                <span class="page-number">11</span>
+                <span class="page-number">10</span>
                 <div class="footer-logo">
                     <img src="fidelity-international.svg" alt="Fidelity International" class="logo-svg">
                 </div>
@@ -680,68 +1459,198 @@ conversation.predict(input="What did I just ask?")  # AI能记住上一个问题
                     <img src="fidelity-international.svg" alt="Fidelity International" class="logo-svg">
                 </div>
             </div>
-            
+
             <h1 class="slide-title">演示 8 - 智能代理系统</h1>
-            
-            <div class="content-layout">
-                <div class="content-left">
+
+            <!-- 横向布局 - 三列设计 -->
+            <div class="horizontal-layout">
+                <!-- 左列：智能代理概念 + 架构图 -->
+                <div class="column-left">
                     <div class="theme-section">
-                        <h2 class="theme-title">多工具协同解决复杂问题</h2>
+                        <h2 class="theme-title">智能代理</h2>
                         <div class="theme-underline orange"></div>
-                        <p class="theme-subtitle">（来自 Demo 08）</p>
+                        <p class="theme-subtitle">自主决策的AI系统</p>
+                    </div>
+
+                    <!-- LangChain核心架构图 - Agents高亮 -->
+                    <div class="architecture-diagram agents-highlight">
+                        <div class="arch-row">
+                            <div class="arch-box">Models<br><span class="arch-desc">(模型层)</span></div>
+                            <div class="arch-box">Prompts<br><span class="arch-desc">(提示词)</span></div>
+                            <div class="arch-box">Parsers<br><span class="arch-desc">(输出解析)</span></div>
+                        </div>
+                        <div class="arch-arrow-down"></div>
+                        <div class="arch-row">
+                            <div class="arch-box">Memory<br><span class="arch-desc">(记忆组件)</span></div>
+                            <div class="arch-box central">Chains<br><span class="arch-desc">(链条)</span></div>
+                            <div class="arch-box highlighted">Agents<br><span class="arch-desc">(智能代理)</span></div>
+                        </div>
+                        <div class="arch-arrow-down"></div>
+                        <div class="arch-row single">
+                            <div class="arch-box wide">Data Connections<br><span
+                                    class="arch-desc">(数据连接层)</span><br><small>Loaders → Splitters → Embeddings →
+                                    Stores</small></div>
+                        </div>
+                        <div class="arch-highlight-note">
+                            <p>💡 当前介绍：<strong>Agents 智能代理</strong></p>
+                        </div>
                     </div>
                 </div>
-                
-                <div class="content-right">
+
+                <!-- 中列：代码示例 -->
+                <div class="column-center">
                     <div class="code-section">
-                        <pre><code>from langchain.agents import load_tools, initialize_agent, AgentType
+                        <h3>基础代理创建</h3>
+                        <pre><code class="language-python">from langchain.agents import load_tools, initialize_agent, AgentType
 from langchain.llms import OpenAI
 
-# 1. 准备工具：搜索 + 数学计算
+# 1. 初始化LLM
 llm = OpenAI(temperature=0)
+
+# 2. 加载工具
 tools = load_tools(["ddg-search", "llm-math"], llm=llm)
 
-# 2. 创建智能代理
+# 3. 创建代理
 agent = initialize_agent(
-    tools, llm, 
+    tools, 
+    llm, 
     agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION, 
     verbose=True
 )
 
-# 3. 提出复杂问题
-result = agent.run("What is the height difference between Eiffel Tower and Taiwan 101 Tower?")</code></pre>
+print(f"可用工具: {[tool.name for tool in tools]}")
+# 输出: ['duckduckgo_search', 'Calculator']</code></pre>
                     </div>
-                    
-                    <div class="output-section">
-                        <h3>AI的推理过程：</h3>
-                        <div class="output-box">
-                            <code>> Entering new AgentExecutor chain...
-I need to find out the heights of both towers.
-Action: duckduckgo_search
-Action Input: "Eiffel Tower height"
-Observation: ...330 meters...
 
-I need to find out the height of Taiwan 101 Tower.
-Action: duckduckgo_search  
-Action Input: "Taiwan 101 Tower height"
-Observation: ...508 metres...
+                    <div class="code-section">
+                        <h3>复杂问题解决</h3>
+                        <pre><code class="language-python"># 提出需要多步推理的问题
+question = "埃菲尔铁塔和台北101的高度差是多少？"
+result = agent.run(question)
 
-Action: Calculator
-Action Input: 330 - 508
-Observation: Answer: -178
+# AI的推理过程：
+# 1. 搜索埃菲尔铁塔高度 → 330米
+# 2. 搜索台北101高度 → 508米  
+# 3. 计算高度差 → 508 - 330 = 178米
 
-Final Answer: The height difference is 178 meters.</code>
-                        </div>
+print(f"最终答案: {result}")
+# 输出: 台北101比埃菲尔铁塔高178米</code></pre>
                     </div>
-                    
-                    <div class="key-advantage">
-                        <strong>核心能力：</strong> AI自主决策使用哪个工具
+
+                    <div class="code-section">
+                        <h3>自定义工具</h3>
+                        <pre><code class="language-python">from langchain.tools import tool
+
+@tool
+def get_stock_price(stock_symbol: str) -> str:
+    """获取股票当前价格"""
+    # 实际实现中会调用金融API
+    return f"{stock_symbol}当前价格: $150.25"
+
+@tool  
+def currency_converter(amount_currency: str) -> str:
+    """货币转换工具"""
+    # 解析输入并转换
+    return "转换结果: ¥1000"
+
+# 使用自定义工具创建代理
+custom_tools = [get_stock_price, currency_converter]
+financial_agent = initialize_agent(
+    custom_tools, llm, verbose=True
+)</code></pre>
+                    </div>
+
+                    <div class="fidelity-pullout-standard" role="region" aria-label="关键优势" tabindex="0">
+                        <strong>关键优势</strong>
+                        <p>智能代理能够自主选择和组合工具，解决复杂的多步骤问题。</p>
                     </div>
                 </div>
+
+                <!-- 右列：详细说明 -->
+                <div class="column-right">
+                    <div id="markdown-content-slide12" class="markdown-content">
+                        <!-- Markdown content will be rendered here -->
+                    </div>
+                    
+                    <!-- Hidden markdown source -->
+                    <script type="text/markdown" id="markdown-source-slide12">
+## 智能代理概述
+
+智能代理是LangChain的最高层抽象，能够根据用户输入自主决策使用哪些工具来完成任务。
+
+### 核心能力
+- **自主推理**: 分析问题并制定执行计划
+- **工具选择**: 根据需要选择合适的工具
+- **多步执行**: 协调多个工具完成复杂任务
+- **错误恢复**: 处理工具执行失败的情况
+
+---
+
+## 代理类型
+
+### 1. ZERO_SHOT_REACT_DESCRIPTION
+基于ReAct框架的零样本代理，最常用的类型。
+
+### 2. CONVERSATIONAL_REACT_DESCRIPTION
+具有对话记忆的ReAct代理，适用于多轮交互。
+
+### 3. CHAT_ZERO_SHOT_REACT_DESCRIPTION
+针对聊天模型优化的ReAct代理。
+
+### 4. SELF_ASK_WITH_SEARCH
+专门用于搜索任务的自问自答代理。
+
+---
+
+## 内置工具
+
+| 工具名称 | 功能 | 使用场景 |
+|---------|------|---------|
+| **ddg-search** | DuckDuckGo搜索 | 获取实时信息 |
+| **llm-math** | 数学计算 | 数值运算和推理 |
+| **wikipedia** | 维基百科查询 | 百科知识检索 |
+| **requests** | HTTP请求 | API调用 |
+| **python_repl** | Python执行 | 代码运行 |
+
+---
+
+## ReAct推理模式
+
+ReAct = **Reasoning** + **Acting**
+
+1. **观察**: 分析当前情况
+2. **思考**: 推理下一步行动
+3. **行动**: 执行选择的工具
+4. **观察**: 查看工具执行结果
+5. **重复**: 直到问题解决
+
+### 示例流程
+```
+问题: 北京现在的天气如何？
+
+思考: 我需要搜索北京的当前天气信息
+行动: 使用搜索工具查询"北京天气"
+观察: 搜索结果显示北京晴天，温度25°C
+思考: 我已经获得了所需信息
+最终答案: 北京现在是晴天，温度25°C
+```
+
+---
+
+## 最佳实践
+
+1. **工具选择**: 为代理提供合适且必要的工具
+2. **提示优化**: 清晰描述期望的行为模式
+3. **错误处理**: 设置工具超时和重试机制
+4. **性能监控**: 跟踪代理的决策过程
+
+智能代理代表了AI系统的未来发展方向。
+                    </script>
+                </div>
             </div>
-            
+
             <div class="slide-footer">
-                <span class="page-number">12</span>
+                <span class="page-number">11</span>
                 <div class="footer-logo">
                     <img src="fidelity-international.svg" alt="Fidelity International" class="logo-svg">
                 </div>
@@ -755,9 +1664,9 @@ Final Answer: The height difference is 178 meters.</code>
                     <img src="fidelity-international.svg" alt="Fidelity International" class="logo-svg">
                 </div>
             </div>
-            
+
             <h1 class="slide-title">演示 9 - 回调与监控</h1>
-            
+
             <div class="content-layout">
                 <div class="content-left">
                     <div class="theme-section">
@@ -766,11 +1675,11 @@ Final Answer: The height difference is 178 meters.</code>
                         <p class="theme-subtitle">（来自 Demo 09）</p>
                     </div>
                 </div>
-                
+
                 <div class="content-right">
                     <div class="code-section">
                         <h3>内置回调处理器 - 标准输出</h3>
-                        <pre><code>from langchain.callbacks import StdOutCallbackHandler
+                        <pre><code class="language-python">from langchain.callbacks import StdOutCallbackHandler
 from langchain.chains import LLMChain
 from langchain.llms import OpenAI
 from langchain.prompts import PromptTemplate
@@ -788,10 +1697,10 @@ chain.run(name="Super Mario")
 # Prompt after formatting: Who is Super Mario?
 # > Finished chain.</code></pre>
                     </div>
-                    
+
                     <div class="code-section">
                         <h3>自定义回调处理器 - 性能计时：</h3>
-                        <pre><code>from langchain.callbacks.base import BaseCallbackHandler
+                        <pre><code class="language-python">from langchain.callbacks.base import BaseCallbackHandler
 import time
 
 class TimerHandler(BaseCallbackHandler):
@@ -807,15 +1716,16 @@ class TimerHandler(BaseCallbackHandler):
 
 # 使用: callbacks=[TimerHandler()]</code></pre>
                     </div>
-                    
-                    <div class="key-advantage">
-                        <strong>应用：</strong> 性能监控、日志记录、流式输出
+
+                    <div class="fidelity-pullout-standard">
+                        <strong>应用：</strong>
+                        <p>性能监控、日志记录、流式输出</p>
                     </div>
                 </div>
             </div>
-            
+
             <div class="slide-footer">
-                <span class="page-number">13</span>
+                <span class="page-number">12</span>
                 <div class="footer-logo">
                     <img src="fidelity-international.svg" alt="Fidelity International" class="logo-svg">
                 </div>
@@ -829,27 +1739,27 @@ class TimerHandler(BaseCallbackHandler):
                     <img src="fidelity-international.svg" alt="Fidelity International" class="logo-svg">
                 </div>
             </div>
-            
+
             <h1 class="slide-title">演示 10 - 完整PDF问答系统</h1>
-            
+
             <div class="content-layout">
                 <div class="content-left">
                     <div class="theme-section">
-                        <h2 class="theme-title">84页文档智能问答</h2>
+                        <h2 class="theme-title">文档智能问答</h2>
                         <div class="theme-underline green"></div>
                         <p class="theme-subtitle">（来自 Demo 10）</p>
                     </div>
                 </div>
-                
+
                 <div class="content-right">
                     <div class="code-section">
-                        <pre><code># 1. 安装依赖
-!pip install langchain==0.0.235 openai chromadb pymupdf tiktoken
+                        <pre><code class="language-python"># 1. 安装依赖
+!pip install langchain openai chromadb pymupdf tiktoken
 
 # 2. 加载PDF文档
 from langchain.document_loaders import PyMuPDFLoader
 docs = PyMuPDFLoader("serverless-core.pdf").load()
-print(f"Loaded {len(docs)} pages")  # 84页
+print(f"Loaded {len(docs)} pages")  
 
 # 3. 文档分割与向量化
 from langchain.text_splitter import RecursiveCharacterTextSplitter
@@ -873,15 +1783,16 @@ similar_docs = vectorstore.similarity_search(query, 3)
 answer = qa_chain.run(input_documents=similar_docs, question=query)
 print(answer)</code></pre>
                     </div>
-                    
-                    <div class="key-advantage">
-                        <strong>成果：</strong> 几行代码实现企业级文档问答系统！
-                    </div>
+
+                    <!-- <div class="fidelity-pullout-banner">
+                        <strong>成果</strong>
+                        <p>几行代码实现企业级文档问答系统！</p>
+                    </div> -->
                 </div>
             </div>
-            
+
             <div class="slide-footer">
-                <span class="page-number">14</span>
+                <span class="page-number">13</span>
                 <div class="footer-logo">
                     <img src="fidelity-international.svg" alt="Fidelity International" class="logo-svg">
                 </div>
@@ -895,9 +1806,9 @@ print(answer)</code></pre>
                     <img src="fidelity-international.svg" alt="Fidelity International" class="logo-svg">
                 </div>
             </div>
-            
+
             <h1 class="slide-title">LangChain 主要解决的问题</h1>
-            
+
             <div class="content-layout">
                 <div class="content-left">
                     <div class="theme-section">
@@ -905,7 +1816,7 @@ print(answer)</code></pre>
                         <div class="theme-underline purple"></div>
                     </div>
                 </div>
-                
+
                 <div class="content-right">
                     <div class="comparison-table">
                         <table>
@@ -965,7 +1876,7 @@ print(answer)</code></pre>
                             </tbody>
                         </table>
                     </div>
-                    
+
                     <div class="core-advantages">
                         <h3>核心优势：</h3>
                         <ul>
@@ -977,7 +1888,72 @@ print(answer)</code></pre>
                     </div>
                 </div>
             </div>
-            
+
+            <div class="slide-footer">
+                <span class="page-number">14</span>
+                <div class="footer-logo">
+                    <img src="fidelity-international.svg" alt="Fidelity International" class="logo-svg">
+                </div>
+            </div>
+        </div>
+
+        <!-- 幻灯片 16: LangChain vs LangGraph 对比 -->
+        <div class="slide" id="slide-16">
+            <div class="slide-header">
+                <div class="logo">
+                    <img src="fidelity-international.svg" alt="Fidelity International" class="logo-svg">
+                </div>
+            </div>
+
+            <h1 class="slide-title">LangChain vs LangGraph 工作流对比</h1>
+
+            <!-- 主要内容区域：图片左侧大图，右侧为针对图片的说明 -->
+            <div class="content-layout">
+                <!-- 左侧：大图展示 -->
+                <div class="content-left" style="width: 65%;">
+                    <div class="workflow-comparison" style="width: 100%; display:flex; justify-content:center;">
+                        <img src="7d0853295d0a480fb41eb74b88e858ec.png" alt="LangChain链式工作流 vs LangGraph图状工作流对比图" class="workflow-comparison-image" style="max-width:100%; height:auto;">
+                    </div>
+                </div>
+
+                <!-- 右侧：基于图片的对比说明 -->
+                <div class="content-right" style="width: 35%;">
+              
+
+                    <div class="highlight-section" style="margin-bottom:16px;">
+                        <h3>🔗 链式（LangChain）</h3>
+                        <ul>
+                            <li>顺序节点：严格的 start → ... → end 流程</li>
+                            <li>单向数据流：每步接收上一步输出</li>
+                            <li>适用场景：线性任务（如报告、文档处理）</li>
+                        </ul>
+                    </div>
+
+                    <div class="highlight-section" style="margin-bottom:16px;">
+                        <h3>🌐 图状（LangGraph）</h3>
+                        <ul>
+                            <li>Supervisor 协调多个 agent 同时工作</li>
+                            <li>代理间有分支与回环：可以重试、迭代和回溯</li>
+                            <li>并行与条件路由：按条件分配不同工具和节点</li>
+                        </ul>
+                    </div>
+
+                    <div class="use-case-section" style="margin-top:8px;">
+                        <h3>🎯 场景举例</h3>
+                        <div class="comparison-grid">
+                            <div class="use-case-item">
+                                <strong>链式：</strong>
+                                <p>批量文档处理、逐步数据清洗</p>
+                            </div>
+                            <div class="use-case-item">
+                                <strong>图状：</strong>
+                                <p>多步骤研究、复杂代理决策、企业自动化</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="slide-footer">
                 <span class="page-number">15</span>
                 <div class="footer-logo">
@@ -986,69 +1962,70 @@ print(answer)</code></pre>
             </div>
         </div>
 
-        <!-- 幻灯片 16: 快速开始指南 -->
-        <div class="slide" id="slide-16">
+        <!-- 幻灯片 17: 什么是 LangGraph？ -->
+        <div class="slide" id="slide-17" style="background: white; background-image: none;">
             <div class="slide-header">
                 <div class="logo">
                     <img src="fidelity-international.svg" alt="Fidelity International" class="logo-svg">
                 </div>
             </div>
-            
-            <h1 class="slide-title">快速开始指南</h1>
-            
+
+            <h1 class="slide-title">什么是 LangGraph？</h1>
+
+            <!-- 左右布局 -->
             <div class="content-layout">
-                <div class="content-left">
-                    <div class="theme-section">
-                        <h2 class="theme-title">立即动手实践</h2>
-                        <div class="theme-underline teal"></div>
+                <!-- 左侧：图片展示 -->
+                <div class="content-left" style="width: 50%; display: flex; justify-content: center; align-items: center;">
+                    <div class="workflow-comparison" style="width: 100%; display: flex; justify-content: center;">
+                        <img src="69b0b95a1266737f70ce1a1bb716c9ce.png" alt="LangGraph 可视化示意图" class="workflow-comparison-image" style="max-width: 75%; max-height: 55vh; width: auto; height: auto; object-fit: contain; border-radius: 12px; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15); border: 2px solid #e5e7eb;">
                     </div>
                 </div>
-                
-                <div class="content-right">
-                    <div class="quick-start-section">
-                        <h3>🚀 环境准备（5分钟）</h3>
-                        <div class="code-section">
-                            <pre><code># 安装依赖
-pip install langchain==0.0.235 openai
 
-# 设置API Key
-export OPENAI_API_KEY="your-api-key"</code></pre>
-                        </div>
-                    </div>
-                    
-                    <div class="quick-start-section">
-                        <h3>📝 第一个应用（10分钟）</h3>
-                        <div class="code-section">
-                            <pre><code>from langchain.chat_models import ChatOpenAI
-from langchain.schema import HumanMessage
-
-chat = ChatOpenAI(temperature=0)
-response = chat([HumanMessage(content="Hello LangChain!")])
-print(response)</code></pre>
-                        </div>
-                    </div>
-                    
-                    <div class="learning-path">
-                        <h3>📖 进阶学习路径</h3>
-                        <ol>
-                            <li><strong>基础组件</strong> - 跟着 Demo 01-05 练习</li>
-                            <li><strong>进阶应用</strong> - 尝试 Demo 06-09 的链、记忆、代理</li>
-                            <li><strong>完整项目</strong> - 实现 Demo 10 的文档问答系统</li>
-                            <li><strong>自定义开发</strong> - 根据业务需求组合组件</li>
-                        </ol>
-                    </div>
-                    
-                    <div class="resources">
-                        <h3>📚 参考资源</h3>
+                <!-- 右侧：描述说明 -->
+                <div class="content-right" style="width: 50%; padding-left: 30px;">
+                    <div class="highlight-section" style="margin-bottom: 20px;">
+                        <h3>🎯 LangGraph 概览</h3>
                         <ul>
-                            <li>官方文档：https://python.langchain.com/</li>
-                            <li>本课程代码：WTF-Langchain GitHub 仓库</li>
-                            <li>演示文件：01_Hello_Langchain/Hello_Langchain.ipynb 等</li>
+                            <li>以图为核心的工作流编排与状态管理</li>
+                            <li>基于图结构的AI工作流框架</li>
+                            <li>支持循环、条件分支与状态传递</li>
                         </ul>
+                    </div>
+
+                    <div class="highlight-section" style="margin-bottom: 20px;">
+                        <h3>🔧 核心组件</h3>
+                        <ul>
+                            <li>节点 (Nodes)：可执行函数、LLM调用或工具</li>
+                            <li>边 (Edges)：定义执行路径与条件路由</li>
+                            <li>状态 (State)：在节点间累积和传递上下文</li>
+                        </ul>
+                    </div>
+
+                    <div class="highlight-section" style="margin-bottom: 20px;">
+                        <h3>⚡ 关键特性</h3>
+                        <ul>
+                            <li>原生循环与迭代支持</li>
+                            <li>动态条件路由与并行执行</li>
+                            <li>可视化图形界面便于调试与监控</li>
+                        </ul>
+                    </div>
+
+                    <div class="use-case-section">
+                        <h3>🎯 应用示例</h3>
+                        <div class="comparison-grid">
+                            <div class="use-case-item">
+                                <strong>研究助手：</strong>
+                                <p>循环检索→分析→验证→总结的闭环流程</p>
+                            </div>
+                            <div class="use-case-item">
+                                <strong>智能代理：</strong>
+                                <p>多工具协调，按条件分配任务</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            
+
             <div class="slide-footer">
                 <span class="page-number">16</span>
                 <div class="footer-logo">
@@ -1057,45 +2034,214 @@ print(response)</code></pre>
             </div>
         </div>
 
-        <!-- 幻灯片 17: 感谢与Q&A -->
-        <div class="slide" id="slide-17">
+
+        <!-- 幻灯片 18: LangGraph 实战示例 -->
+        <div class="slide" id="slide-18">
             <div class="slide-header">
                 <div class="logo">
-                    <img src="fidelity-white.svg" alt="Fidelity International" class="logo-svg">
+                    <img src="fidelity-international.svg" alt="Fidelity International" class="logo-svg">
                 </div>
             </div>
+
+            <h1 class="slide-title">LangGraph 实战示例</h1>
+
+            <!-- 横向布局 - 三列设计 -->
+            <div class="horizontal-layout">
+                <!-- 左列：图工作流概念 + 架构图 -->
+                <div class="column-left">
+                    <div class="theme-section">
+                        <h2 class="theme-title">图工作流</h2>
+                        <div class="theme-underline blue"></div>
+                        <p class="theme-subtitle">状态驱动的智能执行</p>
+                    </div>
+
             
-            <div class="thank-you-content">
-                <div class="thank-you-main">
-                    <h1 class="thank-you-title">感谢与Q&A</h1>
-                    <div class="thank-you-underline"></div>
-                    <h2 class="thank-you-subtitle">开始你的 LangChain 之旅！</h2>
-                    
-                    <div class="summary-section">
-                        <h3>🎯 今天你学到了：</h3>
-                        <ul>
-                            <li>LangChain 的核心概念与价值</li>
-                            <li>10个实际运行的演示代码</li>
-                            <li>从简单调用到复杂AI应用的完整路径</li>
-                        </ul>
+                </div>
+
+                <!-- 中列：代码示例 -->
+                <div class="column-center">
+                    <div class="code-section">
+                        <h3>状态定义（GraphState）</h3>
+                        <pre><code class="language-python">from pydantic import BaseModel
+from langchain_core.messages import BaseMessage
+from typing import List
+
+class GraphState(BaseModel):
+    """图的状态定义"""
+    messages: List[BaseMessage] = []
+    user_intent: str = ""
+    current_step: str = "start"
+    conversation_history: List[str] = []</code></pre>
                     </div>
-                    
-                    <div class="next-steps">
-                        <h3>🔗 接下来：</h3>
-                        <ul>
-                            <li>下载并运行演示代码</li>
-                            <li>尝试修改参数看效果</li>
-                            <li>根据需求组合不同组件</li>
-                        </ul>
+
+                    <div class="code-section">
+                        <h3>构建工作流图</h3>
+                        <pre><code class="language-python">from langgraph.graph import StateGraph, END
+from langgraph.checkpoint.memory import MemorySaver
+
+def _build_graph(self) -> StateGraph:
+    """构建LangGraph工作流图"""
+    
+    # 创建状态图
+    workflow = StateGraph(GraphState)
+    
+    # 添加节点
+    workflow.add_node("analyze_intent", self._analyze_intent)
+    workflow.add_node("generate_response", self._generate_response) 
+    workflow.add_node("save_conversation", self._save_conversation)
+    
+    # 设置入口点
+    workflow.set_entry_point("analyze_intent")
+    
+    # 添加边（定义节点之间的转换）
+    workflow.add_edge("analyze_intent", "generate_response")
+    workflow.add_edge("generate_response", "save_conversation")
+    workflow.add_edge("save_conversation", END)
+    
+    # 编译图
+    return workflow.compile(checkpointer=MemorySaver())</code></pre>
                     </div>
-                    
-                    <div class="qa-section">
-                        <h3>💭 有问题欢迎交流讨论！</h3>
-                        <p class="thank-you-message"><strong>感谢聆听！</strong> 🙏</p>
+
+                    <div class="code-section">
+                        <h3>节点函数示例</h3>
+                        <pre><code class="language-python">def _analyze_intent(self, state: GraphState) -> Dict[str, Any]:
+    """分析用户意图的节点"""
+    if not state.messages:
+        return {"current_step": "intent_analysis"}
+    
+    last_message = state.messages[-1]
+    if isinstance(last_message, HumanMessage):
+        user_input = last_message.content
+        
+        # 简单的意图分析逻辑
+        intent = "general_question"
+        if any(word in user_input.lower() for word in ["你好", "hello", "hi"]):
+            intent = "greeting"
+        elif any(word in user_input.lower() for word in ["再见", "bye"]):
+            intent = "farewell"
+        elif "?" in user_input or "？" in user_input:
+            intent = "question"
+        
+        return {
+            "user_intent": intent,
+            "current_step": "intent_analyzed"
+        }
+    
+    return {"current_step": "intent_analysis"}</code></pre>
+                    </div>
+
+                    <div class="code-section">
+                        <h3>使用聊天机器人</h3>
+                        <pre><code class="language-python"># 创建聊天机器人实例
+chatbot = LangGraphChatBot()
+
+# 同步对话
+response = chatbot.chat_sync("你好！")
+print(f"AI助手: {response}")
+
+# 异步对话（推荐）
+async def chat_example():
+    response = await chatbot.chat("什么是人工智能？")
+    print(f"AI助手: {response}")
+    
+    # 查看对话历史
+    history = chatbot.get_conversation_history()
+    for entry in history:
+        print(entry)
+
+# 运行异步示例
+import asyncio
+asyncio.run(chat_example())</code></pre>
+                    </div>
+
+                    <div class="fidelity-pullout-standard" role="region" aria-label="关键优势" tabindex="0">
+                        <strong>关键优势</strong>
+                        <p>LangGraph通过状态驱动的图结构，实现了灵活的AI对话流程，支持复杂的多轮交互和状态管理。</p>
                     </div>
                 </div>
+
+                <!-- 右列：详细说明 -->
+                <div class="column-right">
+                    <div id="markdown-content-slide18" class="markdown-content">
+                        <!-- Markdown content will be rendered here -->
+                    </div>
+                    
+                    <!-- Hidden markdown source -->
+                    <script type="text/markdown" id="markdown-source-slide18">
+## 图工作流概述
+
+图工作流是LangGraph中用于构建复杂AI应用的核心组件，通过状态驱动实现智能执行流程。
+
+### 核心能力
+- **状态管理**: 维持执行过程中的完整状态
+- **动态路由**: 根据状态条件智能选择路径
+- **循环支持**: 支持反复迭代和回环处理
+- **并行执行**: 允许多个分支同时处理
+
+---
+
+## 图结构类型
+
+### 1. StateGraph
+基于状态的图结构，是最常用的类型。
+
+### 2. MessageGraph
+专门处理消息流的图结构。
+
+### 3. CompiledGraph
+编译后的可执行图，提供运行时优化。
+
+### 4. HierarchicalGraph
+分层图结构，支持复杂的嵌套工作流。
+
+---
+
+## 核心组件
+
+| 组件名称 | 功能 | 使用场景 |
+|---------|------|---------|
+| **GraphState** | 状态定义和管理 | 维护图执行状态 |
+| **节点函数** | 处理特定任务 | 意图分析、响应生成 |
+| **工作流图** | 组织执行顺序 | 定义节点间转换 |
+| **检查点** | 状态持久化 | 支持恢复和重试 |
+
+---
+
+## 执行流程模式
+
+LangGraph = **状态图** + **智能路由**
+
+1. **状态初始化**: 创建图的初始状态
+2. **节点执行**: 按顺序执行各个节点
+3. **状态更新**: 每个节点更新图状态
+4. **路径选择**: 根据状态决定下一步
+5. **循环迭代**: 直到达到终止条件
+
+### 示例流程
+```
+用户输入: "你好，什么是人工智能？"
+
+状态初始化: {"messages": [], "current_step": "start"}
+意图分析: 识别为问候+问题，更新user_intent
+响应生成: 调用LLM生成回答，添加到messages
+历史保存: 格式化对话记录，更新conversation_history
+最终状态: 包含完整对话历史的状态对象
+```
+
+---
+
+## 最佳实践
+
+1. **状态设计**: 定义清晰的状态结构和字段
+2. **节点职责**: 每个节点专注单一功能
+3. **错误处理**: 实现完善的异常捕获机制
+4. **性能监控**: 跟踪图的执行过程和性能
+
+图工作流是构建下一代AI应用的核心技术。
+                    </script>
+                </div>
             </div>
-            
+
             <div class="slide-footer">
                 <span class="page-number">17</span>
                 <div class="footer-logo">
@@ -1103,18 +2249,105 @@ print(response)</code></pre>
                 </div>
             </div>
         </div>
+
+        <!-- 幻灯片 19: Dify 平台介绍 -->
+        <div class="slide" id="slide-19">
+            <div class="slide-header">
+                <div class="logo">
+                    <img src="fidelity-international.svg" alt="Fidelity International" class="logo-svg">
+                </div>
+            </div>
+
+            <h1 class="slide-title">WorkFlow&Dify</h1>
+
+            <!-- 左右布局设计 -->
+            <div class="content-layout">
+                <!-- 左侧：3张可点击放大的图片 -->
+                <div class="content-left">
+                    <div class="dify-images-gallery">
+                        <!-- 工作流设计界面 -->
+                        <div class="dify-image-item" onclick="openImageModal('CleanShot 2025-09-16 at 00.40.09@2x.png', '工作流设计界面')">
+                            <img src="CleanShot 2025-09-16 at 00.40.09@2x.png" alt="Dify工作流编排界面" class="dify-gallery-image">
+                            <div class="image-caption">工作流设计界面</div>
+                        </div>
+
+                        <!-- 聊天流应用 -->
+                        <div class="dify-image-item" onclick="openImageModal('CleanShot 2025-09-16 at 00.40.25@2x.png', '聊天流应用构建')">
+                            <img src="CleanShot 2025-09-16 at 00.40.25@2x.png" alt="Dify聊天流应用" class="dify-gallery-image">
+                            <div class="image-caption">聊天流应用构建</div>
+                        </div>
+
+                        <!-- 智能代理配置 -->
+                        <div class="dify-image-item" onclick="openImageModal('CleanShot 2025-09-16 at 00.40.56@2x.png', '智能代理配置')">
+                            <img src="CleanShot 2025-09-16 at 00.40.56@2x.png" alt="Dify智能代理配置" class="dify-gallery-image">
+                            <div class="image-caption">智能代理配置</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 右侧：Workflow和Dify平台介绍 -->
+                <div class="content-right">
+                    <div id="markdown-content-slide19" class="markdown-content">
+                        <!-- Markdown content will be rendered here -->
+                    </div>
+                    
+                    <!-- Hidden markdown source -->
+                    <script type="text/markdown" id="markdown-source-slide19">
+## 什么是 Workflow？
+
+**工作流（Workflow）** 是一系列相互连接的业务活动或任务的自动化序列，用于完成特定的业务目标。
+
+### 传统工作流 vs AI工作流
+
+| 特征 | 传统工作流 | AI智能工作流 |
+|------|----------|-------------|
+| **决策能力** | 基于预设规则 | 智能推理决策 |
+| **适应性** | 固定流程 | 动态调整路径 |
+| **处理复杂性** | 结构化数据 | 非结构化内容 |
+| **学习能力** | 无自主学习 | 持续优化改进 |
+
+---
+
+## Dify 平台概览
+
+**Dify** 是新一代开源LLM应用开发平台，融合了Backend as a Service和LLMOps理念。
+
+
+
+### 📊 平台核心组件
+
+1. **工作流引擎**: 可视化节点编排，支持复杂业务逻辑
+2. **对话管理**: 多轮对话、上下文记忆、个性化响应
+3. **知识库系统**: RAG检索增强、向量数据库、文档解析
+4. **模型网关**: 统一多厂商LLM接口，智能路由分发
+5. **Agent框架**: Function Calling、工具调用、外部API集成
+
+                    </script>
+                </div>
+            </div>
+
+            <div class="slide-footer">
+                <span class="page-number">19</span>
+                <div class="footer-logo">
+                    <img src="fidelity-international.svg" alt="Fidelity International" class="logo-svg">
+                </div>
+            </div>
+        </div>
+
+
     </div>
 
     <!-- 导航控制 -->
     <div class="navigation">
-        <button id="prevBtn" class="nav-btn">‹ 上一页</button>
-        <span id="slideCounter" class="slide-counter">1 / 17</span>
-        <button id="nextBtn" class="nav-btn">下一页 ›</button>
+        <button id="prevBtn" class="nav-btn" aria-label="转到上一张幻灯片">‹ 上一页</button>
+        <span id="slideCounter" class="slide-counter" aria-live="polite" aria-label="当前幻灯片位置">1 / 19</span>
+        <button id="nextBtn" class="nav-btn" aria-label="转到下一张幻灯片">下一页 ›</button>
     </div>
 
     <!-- 手动显示/隐藏导航的切换按钮 -->
     <button id="navToggleBtn" class="nav-toggle-btn" aria-label="显示或隐藏导航">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <line x1="4" y1="12" x2="20" y2="12"></line>
             <line x1="4" y1="6" x2="20" y2="6"></line>
             <line x1="4" y1="18" x2="20" y2="18"></line>
@@ -1122,28 +2355,112 @@ print(response)</code></pre>
     </button>
 
     <!-- 幻灯片索引 -->
-    <div class="slide-index">
+    <div class="slide-index" role="navigation" aria-label="幻灯片快速导航">
         <div class="index-dots">
-            <span class="dot active" data-slide="1"></span>
-            <span class="dot" data-slide="2"></span>
-            <span class="dot" data-slide="3"></span>
-            <span class="dot" data-slide="4"></span>
-            <span class="dot" data-slide="5"></span>
-            <span class="dot" data-slide="6"></span>
-            <span class="dot" data-slide="7"></span>
-            <span class="dot" data-slide="8"></span>
-            <span class="dot" data-slide="9"></span>
-            <span class="dot" data-slide="10"></span>
-            <span class="dot" data-slide="11"></span>
-            <span class="dot" data-slide="12"></span>
-            <span class="dot" data-slide="13"></span>
-            <span class="dot" data-slide="14"></span>
-            <span class="dot" data-slide="15"></span>
-            <span class="dot" data-slide="16"></span>
-            <span class="dot" data-slide="17"></span>
+            <button class="dot active" data-slide="1" aria-label="转到第1张幻灯片：封面页" aria-current="page"></button>
+            <button class="dot" data-slide="2" aria-label="转到第2张幻灯片：什么是LangChain"></button>
+            <button class="dot" data-slide="3" aria-label="转到第3张幻灯片：LangChain核心架构"></button>
+            <button class="dot" data-slide="5" aria-label="转到第5张幻灯片：Hello LangChain演示"></button>
+            <button class="dot" data-slide="6" aria-label="转到第6张幻灯片：模型类型对比"></button>
+            <button class="dot" data-slide="7" aria-label="转到第7张幻灯片：数据连接全流程"></button>
+            <button class="dot" data-slide="8" aria-label="转到第8张幻灯片：提示词模板"></button>
+            <button class="dot" data-slide="9" aria-label="转到第9张幻灯片：结构化输出解析"></button>
+            <button class="dot" data-slide="10" aria-label="转到第10张幻灯片：链式调用与数学推理"></button>
+            <button class="dot" data-slide="11" aria-label="转到第11张幻灯片：对话记忆管理"></button>
+            <button class="dot" data-slide="12" aria-label="转到第12张幻灯片：智能代理系统"></button>
+            <button class="dot" data-slide="13" aria-label="转到第13张幻灯片：回调与监控"></button>
+            <button class="dot" data-slide="14" aria-label="转到第14张幻灯片：PDF问答系统"></button>
+            <button class="dot" data-slide="15" aria-label="转到第15张幻灯片：LangChain解决的问题"></button>
+            <button class="dot" data-slide="16" aria-label="转到第16张幻灯片：LangChain vs LangGraph对比"></button>
+            <button class="dot" data-slide="17" aria-label="转到第17张幻灯片：什么是LangGraph"></button>
+            <button class="dot" data-slide="18" aria-label="转到第18张幻灯片：LangGraph实战示例"></button>
+            <button class="dot" data-slide="19" aria-label="转到第19张幻灯片：Dify平台介绍"></button>
         </div>
     </div>
 
+    <!-- 图片模态框 -->
+    <div id="imageModal" class="image-modal" onclick="closeImageModal()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="modal-close" onclick="closeImageModal()">&times;</span>
+            <img id="modalImage" class="modal-image" src="" alt="">
+            <div id="modalCaption" class="modal-caption"></div>
+        </div>
+    </div>
+
+    <script src="highlight.min.js"></script>
     <script src="script.js"></script>
+    
+    <script>
+        // 图片模态框功能
+        function openImageModal(imageSrc, caption) {
+            const modal = document.getElementById('imageModal');
+            const modalImage = document.getElementById('modalImage');
+            const modalCaption = document.getElementById('modalCaption');
+            
+            if (!modal || !modalImage || !modalCaption) {
+                return;
+            }
+            
+            modalImage.src = imageSrc;
+            modalCaption.textContent = caption;
+            modal.style.display = 'flex';
+            
+            // 确保样式更新后再添加show类
+            setTimeout(() => {
+                modal.classList.add('show');
+            }, 10);
+            
+            // 阻止页面滚动
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeImageModal() {
+            const modal = document.getElementById('imageModal');
+            if (!modal) return;
+            
+            modal.classList.remove('show');
+            document.body.style.overflow = '';
+            
+            // 延迟隐藏模态框，等待动画完成
+            setTimeout(() => {
+                if (!modal.classList.contains('show')) {
+                    modal.style.display = 'none';
+                }
+            }, 300);
+        }
+
+        // 将函数添加到全局作用域，确保inline onclick可以访问
+        window.openImageModal = openImageModal;
+        window.closeImageModal = closeImageModal;
+
+        // DOM加载完成后初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // ESC键关闭模态框
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape') {
+                    closeImageModal();
+                }
+            });
+
+            // 点击模态框背景关闭
+            const modal = document.getElementById('imageModal');
+            if (modal) {
+                modal.addEventListener('click', function(event) {
+                    if (event.target === modal) {
+                        closeImageModal();
+                    }
+                });
+            }
+
+            // 阻止模态框内容区域点击事件冒泡
+            const modalContent = document.querySelector('.modal-content');
+            if (modalContent) {
+                modalContent.addEventListener('click', function(event) {
+                    event.stopPropagation();
+                });
+            }
+        });
+    </script>
 </body>
+
 </html>
