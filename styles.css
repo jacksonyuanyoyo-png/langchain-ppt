@@ -2182,6 +2182,94 @@ body {
   background-attachment: fixed;
 }
 
+/* Slide 17 特定样式 */
+#slide-17 .content-layout {
+  flex: 1;
+  display: flex;
+  gap: var(--space-6);
+  min-height: 0;
+  overflow: visible;
+  height: calc(100vh - 140px - 80px);
+}
+
+#slide-17 .content-left {
+  width: 50% !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+#slide-17 .content-right {
+  width: 50% !important;
+  padding-left: 30px !important;
+  overflow-y: auto;
+  max-height: calc(100vh - 140px - 80px);
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary-blue) transparent;
+}
+
+/* Slide 17 content-right 滚动条样式 */
+#slide-17 .content-right::-webkit-scrollbar {
+  width: 8px;
+}
+
+#slide-17 .content-right::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+#slide-17 .content-right::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+}
+
+#slide-17 .content-right::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* Slide 17 文本样式增强 */
+#slide-17 .highlight-section {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+#slide-17 .use-case-section {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+#slide-17 .comparison-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+#slide-17 .use-case-item {
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 8px;
+  border: 1px solid rgba(0, 97, 147, 0.2);
+}
+
+#slide-17 .use-case-item strong {
+  color: var(--primary-blue);
+  font-weight: 600;
+}
+
+#slide-17 .use-case-item p {
+  margin: 8px 0 0 0;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
 .thank-you-content {
   flex: 1;
   display: flex;
